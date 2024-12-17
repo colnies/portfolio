@@ -43,7 +43,7 @@ const projects = [
     {
         id: 1,
         title: "Joonbug",
-        description: "A dynamic events promotion platform showcasing nightlife and entertainment across multiple cities. Built with Typescript & Tailwind, featuring an interactive events listings, ticket purchasing integration, and responsive design for optimal mobile experience.",
+        description: "A dynamic events promotion platform showcasing nightlife and entertainment across multiple cities. Built with Typescript & Tailwind, featuring interactive events listings, ticket purchasing integration, and responsive design.",
         image: "/joonbug.png",
         link: "https://joonbug.com"
     },
@@ -53,7 +53,22 @@ const projects = [
         description: "A lending platform that modernizes the loan application process. Developed using Next.js & Styled Components, with a focus on secure user authentication and seamless data handling.",
         image: "/lendswift.png",
         link: "https://lendswift.com"
+    },
+    {
+        id: 3,
+        title: "Union Square Financial",
+        description: "A personal lending platform built with Next.js and Tailwind CSS, integrated with Contentful CMS and PostgreSQL database.",
+        image: "/unionsquare.png",
+        link: "https://unionsquarefinancial.com"
+    },
+    {
+        id: 4,
+        title: "Crave Ticket Resellers",
+        description: "A dynamic website for event ticket resellers built with Next.js and Tailwind CSS.",
+        image: "/resellers.png",
+        link: "https://lauranye25.cravetickets.com"
     }
+
 ];
 
 export default function HomePage() {
