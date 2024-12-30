@@ -111,7 +111,7 @@ export default function HomePage() {
                         </Link>
                     </div>
                     <Link href="#projects">
-                        <Button className="mt-8">View My Work</Button>
+                        <Button className="mt-8 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">View My Work</Button>
                     </Link>
                 </div>
             </section>
