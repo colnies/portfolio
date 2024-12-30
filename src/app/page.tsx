@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Colin Nies - Frontend Developer & Product Designer',
         description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
-        url: 'https://yourwebsite.com',
+        url: 'https://colinnies.dev',
         siteName: 'Colin Nies Portfolio',
         images: [
             {
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'Colin Nies - Frontend Developer & Product Designer',
         description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
-        images: ['https://yourwebsite.com/og-image.jpg'],
+        images: ['https://colinnies.dev/main-logo.png'],
     },
     robots: {
         index: true,
