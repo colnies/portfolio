@@ -83,7 +83,7 @@ export default function HomePage() {
             <section className="h-screen flex flex-col justify-center items-center relative">
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
                 <div className="z-10 text-center space-y-6 px-4">
-                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-white to-sky-800 animate-flow bg-[length:200%_auto]">
+                    <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
                         Colin Nies
                     </h1>
                     <p className="text-xl md:text-2xl text-muted-foreground ">
