@@ -9,6 +9,21 @@ export default {
   ],
   theme: {
   	extend: {
+        animation: {
+            'flow': 'flowGradient 10s ease infinite',
+            'fade-in': 'fadeIn 1s ease-out',
+            'fade-in-slow': 'fadeIn 1.5s ease-out',
+        },
+        keyframes: {
+            flowGradient: {
+              '0%, 100%': { backgroundPosition: '0% 50%' },
+              '50%': { backgroundPosition: '100% 50%' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+        },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
