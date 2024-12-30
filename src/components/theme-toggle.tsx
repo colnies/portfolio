@@ -14,7 +14,7 @@ export function ThemeToggle() {
             className={`
                 relative h-7 w-14 rounded-full p-1
                 transition-all duration-700
-                ${isDark ? 'bg-slate-800' : 'bg-slate-200'}
+                ${isDark ? 'bg-slate-700' : 'bg-slate-300'}
             `}
             aria-label="Toggle theme"
         >
