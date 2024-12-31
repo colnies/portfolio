@@ -119,7 +119,7 @@ export default function HomePage() {
                                     <Linkedin className="h-5 w-5" />
                                 </Button>
                             </Link>
-                            <Link href="mailto:colin.nies6@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email Link">
+                            <Link href="mailto:contact@colinnies.dev" target="_blank" rel="noopener noreferrer" aria-label="Email Link">
                                 <Button variant="outline" size="icon" aria-label="Email Button">
                                     <Mail className="h-5 w-5" />
                                 </Button>
@@ -221,7 +221,7 @@ export default function HomePage() {
                     <p className="text-muted-foreground mb-8">
                         I'm always interested in hearing about new projects and opportunities.
                     </p>
-                    <Link href="mailto:colin.nies6@gmail.com" target="_blank" rel="noopener noreferrer">
+                    <Link href="mailto:contact@colinnies.dev" target="_blank" rel="noopener noreferrer">
                         <Button>
                             Get In Touch <Mail className="ml-2 h-4 w-4" />
                         </Button>
