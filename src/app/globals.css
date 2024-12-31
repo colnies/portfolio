@@ -85,4 +85,53 @@ body {
     100% {
       background-position: 0% 50%;
     }
+}
+
+
+@layer utilities {
+    /* Default slide up animation */
+    .animate-in {
+      animation: animate-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Pop up animation */
+    .pop-up.animate-in {
+      animation: pop-up 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+  
+    /* Delay utilities */
+    .delay-200.animate-in {
+      animation-delay: 200ms;
+    }
+  
+    .delay-400.animate-in {
+      animation-delay: 400ms;
+    }
+  
+    /* Keyframes */
+    @keyframes animate-in {
+      from {
+        opacity: 0;
+        transform: translateY(2rem);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  
+    @keyframes pop-up {
+      0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(2rem);
+      }
+      70% {
+        opacity: 1;
+        transform: scale(1.02) translateY(-0.5rem);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
   }

@@ -14,8 +14,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Colin Nies - Frontend Developer & Product Designer",
-  description: "Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences",
+    title: 'Colin Nies - Frontend Developer & Product Designer',
+    description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+    openGraph: {
+        title: 'Colin Nies - Frontend Developer & Product Designer',
+        description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+        url: 'https://colinnies.dev',
+        siteName: 'Colin Nies Portfolio',
+        images: [
+            {
+                url: '/main-logo.png',
+                width: 1200,
+                height: 630,
+            }
+        ],
+        locale: 'en_US',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Colin Nies - Frontend Developer & Product Designer',
+        description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+        images: ['https://colinnies.dev/main-logo.png'],
+    },
+    robots: {
+        index: true,
+        follow: true,
+    },
+    icons: {
+        icon: '/Favicon-32x32.svg',
+    },
 };
 
 export default function RootLayout({
