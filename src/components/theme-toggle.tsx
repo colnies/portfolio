@@ -5,8 +5,15 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
 export function ThemeToggle() {
-    const { theme, setTheme } = useTheme()
-    const isDark = theme === "dark"
+    const { resolvedTheme, setTheme } = useTheme()
+    const [mounted, setMounted] = React.useState(false)
+    
+    React.useEffect(() => {
+        setMounted(true)
+    }, [])
+    
+    // Default to dark theme appearance during SSR to prevent flash
+    const isDark = mounted ? resolvedTheme === "dark" : true
 
     return (
         <button
