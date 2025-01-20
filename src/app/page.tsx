@@ -216,7 +216,7 @@ export default function HomePage() {
 
             {/* Contact Section */}
             <section className="py-20 px-4">
-                <AnimatedSection className="pop-up delay-200 max-w-2xl mx-auto text-center">
+                <AnimatedSection className="max-w-2xl mx-auto text-center">
                     <h2 className="text-3xl font-bold mb-6">Let's Work Together</h2>
                     <p className="text-muted-foreground mb-8">
                         I'm always interested in hearing about new projects and opportunities.
