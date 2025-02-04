@@ -1,59 +1,39 @@
 "use client"
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Github, Linkedin, Mail, ExternalLink, Layout, Lightbulb, Palette } from "lucide-react";
 import Link from 'next/link';
-import { Metadata } from 'next';
 import { ThemeToggle } from '@/components/theme-toggle';
 import Image from 'next/image';
+import { WaveBackground } from '@/components/gentle-wave';
 
-// Custom hook for scroll animations
-const useScrollAnimation = () => {
-    const ref = useRef(null);
-  
-    useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('animate-in');
-            }
-          });
-        },
-        {
-          threshold: 0.1,
-          rootMargin: '50px',
-        }
-      );
-  
-      if (ref.current) {
-        observer.observe(ref.current);
-      }
-  
-      return () => {
-        if (ref.current) {
-          observer.unobserve(ref.current);
-        }
-      };
-    }, []);
-  
-    return ref;
-};
-  
-// AnimatedSection component
-const AnimatedSection = ({ children, className = '' }: { children: ReactNode, className?: string }) => {
-    const ref = useScrollAnimation();
-    return (
-      <div 
-        ref={ref} 
-        className={`opacity-0 translate-y-8 transition-all duration-700 ease-out ${className}`}
-      >
-        {children}
-      </div>
-    );
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
+  }
 };
 
+const staggerChildren = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+};
+
+// Wrap the Card component with motion
+const MotionCard = motion(Card);
 
 const projects = [
     {
@@ -82,62 +62,100 @@ const projects = [
         title: "Crave Ticket Resellers",
         description: "A dynamic website for event ticket resellers built with Next.js and Tailwind CSS.",
         image: "/resellers.png",
-        link: "https://lauranye25.cravetickets.com"
+        link: "https://cravetickets.com"
     }
-
 ];
 
 export default function HomePage() {
     return (
         <div className="min-h-screen bg-background transition-colors duration-700">
-            {/* Theme Toggle in corner */}
             <div className="fixed top-4 right-4 z-50">
                 <ThemeToggle />
             </div>
+            <WaveBackground />
             {/* Hero Section */}
-            <section className="h-screen flex flex-col justify-center items-center relative">
+            <motion.section 
+                className="h-screen flex flex-col justify-center items-center relative"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+            >
+                
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
-                    <div className="z-10 text-center space-y-6 px-4">
-                        <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
-                            Colin Nies
-                        </h1>
-                        <p className="text-xl md:text-2xl text-muted-foreground ">
-                            Frontend Developer & Product Designer
-                        </p>
-                        <div className="text-lg text-muted-foreground max-w-xl">
-                            <p>Currently pursuing my Master's in Product Design,</p>
-                            <p>crafting user-centered digital experiences</p>
-                        </div>
-                        <div className="flex gap-4 justify-center">
-                            <Link href="https://github.com/colnies" target="_blank" rel="noopener noreferrer" aria-label="View GitHub profile">
-                                <Button variant="outline" size="icon" aria-label="Github Button">
-                                    <Github className="h-5 w-5" />
-                                </Button>
-                            </Link>
-                            <Link href="https://linkedin.com/in/colin-nies" target="_blank" rel="noopener noreferrer" aria-label="View LinkedIn profile">
-                                <Button variant="outline" size="icon" aria-label="LinkedIn Button">
-                                    <Linkedin className="h-5 w-5" />
-                                </Button>
-                            </Link>
-                            <Link href="mailto:contact@colinnies.dev" target="_blank" rel="noopener noreferrer" aria-label="Email Link">
-                                <Button variant="outline" size="icon" aria-label="Email Button">
-                                    <Mail className="h-5 w-5" />
-                                </Button>
-                            </Link>
-                        </div>
-                        <Link href="#projects">
-                            <Button className="mt-8 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">View My Work</Button>
+                <motion.div 
+                    className="z-10 text-center space-y-6 px-4"
+                    variants={staggerChildren}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    <motion.h1 
+                        variants={fadeInUp}
+                        className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]"
+                    >
+                        Colin Nies
+                    </motion.h1>
+                    <motion.p 
+                        variants={fadeInUp}
+                        className="text-xl md:text-2xl text-muted-foreground"
+                    >
+                        Frontend Developer & Product Designer
+                    </motion.p>
+                    <motion.div 
+                        variants={fadeInUp}
+                        className="text-lg text-muted-foreground max-w-xl"
+                    >
+                        <p>Currently pursuing my Master's in Product Design,</p>
+                        <p>crafting user-centered digital experiences</p>
+                    </motion.div>
+                    <motion.div 
+                        variants={fadeInUp}
+                        className="flex gap-4 justify-center"
+                    >
+                        <Link href="https://github.com/colnies" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="icon">
+                                <Github className="h-5 w-5" />
+                            </Button>
                         </Link>
-                    </div>
-            </section>
+                        <Link href="https://linkedin.com/in/colin-nies" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="icon">
+                                <Linkedin className="h-5 w-5" />
+                            </Button>
+                        </Link>
+                        <Link href="mailto:contact@colinnies.dev">
+                            <Button variant="outline" size="icon">
+                                <Mail className="h-5 w-5" />
+                            </Button>
+                        </Link>
+                    </motion.div>
+                    <motion.div variants={fadeInUp}>
+                        <Link href="#projects">
+                            <Button className="mt-8 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
+                                View My Work
+                            </Button>
+                        </Link>
+                    </motion.div>
+                </motion.div>
+            </motion.section>
 
             {/* Skills Section */}
             <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">
-                    <AnimatedSection>
-                        <h2 className="text-3xl font-bold text-center mb-12">What I Do</h2>
-                    </AnimatedSection>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <motion.h2 
+                        className="text-3xl font-bold text-center mb-12"
+                        variants={fadeInUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                    >
+                        What I Do
+                    </motion.h2>
+                    <motion.div 
+                        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                        variants={staggerChildren}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                    >
                         {[
                             {
                                 icon: <Layout className="h-6 w-6 text-primary" />,
@@ -155,8 +173,8 @@ export default function HomePage() {
                                 description: "Conducting user research and translating insights into meaningful product improvements."
                             }
                         ].map((skill, index) => (
-                            <AnimatedSection key={index} className="delay-[100ms]">
-                                <Card className="bg-card hover:shadow-lg transition-shadow">
+                            <motion.div key={index} variants={fadeInUp}>
+                                <MotionCard className="bg-card hover:shadow-lg transition-shadow">
                                     <CardContent className="pt-6">
                                         <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
                                             {skill.icon}
@@ -166,30 +184,42 @@ export default function HomePage() {
                                             {skill.description}
                                         </p>
                                     </CardContent>
-                                </Card>
-                            </AnimatedSection>
+                                </MotionCard>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Featured Projects Section */}
             <section id="projects" className="py-20 px-4 bg-muted/50">
                 <div className="max-w-6xl mx-auto">
-                    <AnimatedSection>
-                        <h2 className="text-3xl font-bold text-center mb-12">Featured Projects</h2>
-                    </AnimatedSection>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+                    <motion.h2 
+                        className="text-3xl font-bold text-center mb-12"
+                        variants={fadeInUp}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                    >
+                        Featured Projects
+                    </motion.h2>
+                    <motion.div 
+                        className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr"
+                        variants={staggerChildren}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                    >
                         {projects.map((project, index) => (
-                            <AnimatedSection key={project.id}>
-                                <Card key={project.id} className="overflow-hidden hover:shadow-lg transition-shadow h-full">
+                            <motion.div key={project.id} variants={fadeInUp}>
+                                <MotionCard className="overflow-hidden hover:shadow-lg transition-shadow h-full">
                                     <CardContent className="p-0 flex flex-col h-full">
                                         <Image 
                                             src={project.image} 
                                             alt={project.title}
                                             width={400}
                                             height={200}
-                                            className="w-full h-48 object-cover shrink-0"
+                                            className="w-full h-48 object-cover"
                                             loading={index === 0 ? "eager" : "lazy"}
                                             sizes="(max-width: 768px) 100vw, 50vw"
                                         />
@@ -207,26 +237,42 @@ export default function HomePage() {
                                             </div>
                                         </div>
                                     </CardContent>
-                                </Card>
-                            </AnimatedSection>
+                                </MotionCard>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Contact Section */}
             <section className="py-20 px-4">
-                <AnimatedSection className="max-w-2xl mx-auto text-center">
-                    <h2 className="text-3xl font-bold mb-6">Let's Work Together</h2>
-                    <p className="text-muted-foreground mb-8">
+                <motion.div 
+                    className="max-w-2xl mx-auto text-center"
+                    variants={staggerChildren}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                >
+                    <motion.h2 
+                        variants={fadeInUp}
+                        className="text-3xl font-bold mb-6"
+                    >
+                        Let's Work Together
+                    </motion.h2>
+                    <motion.p 
+                        variants={fadeInUp}
+                        className="text-muted-foreground mb-8"
+                    >
                         I'm always interested in hearing about new projects and opportunities.
-                    </p>
-                    <Link href="mailto:contact@colinnies.dev" target="_blank" rel="noopener noreferrer">
-                        <Button>
-                            Get In Touch <Mail className="ml-2 h-4 w-4" />
-                        </Button>
-                    </Link>
-                </AnimatedSection>
+                    </motion.p>
+                    <motion.div variants={fadeInUp}>
+                        <Link href="mailto:contact@colinnies.dev">
+                            <Button>
+                                Get In Touch <Mail className="ml-2 h-4 w-4" />
+                            </Button>
+                        </Link>
+                    </motion.div>
+                </motion.div>
             </section>
         </div>
     );
