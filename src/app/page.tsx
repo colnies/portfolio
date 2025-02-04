@@ -98,7 +98,7 @@ export default function HomePage() {
                         variants={fadeInUp}
                         className="text-xl md:text-2xl text-muted-foreground"
                     >
-                        Frontend Developer & Product Designer
+                        Web Developer & Product Designer
                     </motion.p>
                     <motion.div 
                         variants={fadeInUp}
@@ -159,7 +159,7 @@ export default function HomePage() {
                         {[
                             {
                                 icon: <Layout className="h-6 w-6 text-primary" />,
-                                title: "Frontend Development",
+                                title: "Full Stack Development",
                                 description: "Building responsive, intuitive web applications with React, Next.js, and modern design systems."
                             },
                             {

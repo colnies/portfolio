@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Colin Nies - Frontend Developer & Product Designer',
-    description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+    title: 'Colin Nies - Web Developer & Product Designer',
+    description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
     openGraph: {
-        title: 'Colin Nies - Frontend Developer & Product Designer',
-        description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+        title: 'Colin Nies - Web Developer & Product Designer',
+        description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
         url: 'https://colinnies.dev',
         siteName: 'Colin Nies Portfolio',
         images: [
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Colin Nies - Frontend Developer & Product Designer',
-        description: 'Portfolio of Colin Nies - Frontend Developer and Product Designer specializing in user-centered digital experiences',
+        title: 'Colin Nies - Web Developer & Product Designer',
+        description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
         images: ['https://colinnies.dev/main-logo.png'],
     },
     robots: {
