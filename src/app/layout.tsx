@@ -4,10 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
-    title: 'Colin Nies - Web Developer & Product Designer',
+    title: 'Colin Nies',
     description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
     openGraph: {
-        title: 'Colin Nies - Web Developer & Product Designer',
+        title: 'Colin Nies',
         description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
         url: 'https://colinnies.dev',
         siteName: 'Colin Nies Portfolio',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Colin Nies - Web Developer & Product Designer',
+        title: 'Colin Nies',
         description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
         images: ['https://colinnies.dev/main-logo.png'],
     },
