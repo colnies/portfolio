@@ -24,6 +24,9 @@ export default {
               '100%': { opacity: '1' },
             },
         },
+        fontFamily: {
+            basier: ['var(--font-basier)', 'sans-serif'],
+        },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

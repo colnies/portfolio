@@ -73,43 +73,60 @@ export default function HomePage() {
                 <ThemeToggle />
             </div>
             <WaveBackground />
+
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
             {/* Hero Section */}
             <motion.section 
-                className="h-screen flex flex-col justify-center items-center relative"
+                className="h-screen flex flex-col pl-2 md:pl-0 max-w-3xl mx-auto relative pt-20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1 }}
             >
-                
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
                 <motion.div 
-                    className="z-10 text-center space-y-6 px-4"
+                    className="z-10 text-left space-y-6 px-4"
                     variants={staggerChildren}
                     initial="hidden"
                     animate="visible"
                 >
                     <motion.h1 
                         variants={fadeInUp}
-                        className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]"
+                        className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]"
                     >
                         Colin Nies
                     </motion.h1>
                     <motion.p 
                         variants={fadeInUp}
-                        className="text-xl md:text-2xl text-muted-foreground"
+                        className="text-xl md:text-2xl text-foreground uppercase"
                     >
-                        Web Developer & Product Designer
+                        Web Developer
+                        <br/>
+                        Focused on Experience Design.
                     </motion.p>
                     <motion.div 
                         variants={fadeInUp}
-                        className="text-lg text-muted-foreground max-w-xl"
+                        className="text-lg text-muted-foreground max-w-md font-basier"
                     >
-                        <p>Currently pursuing my Master's in Product Design,</p>
-                        <p>crafting user-centered digital experiences</p>
+                        <p>Currently pursuing my Master's in <span className="text-foreground">Product Design</span> at <span className="text-foreground">Rutgers University</span></p>
                     </motion.div>
                     <motion.div 
                         variants={fadeInUp}
-                        className="flex gap-4 justify-center"
+                        className="text-lg text-muted-foreground max-w-md font-basier"
+                    >
+                        <p>
+                            Building fast apps where every small interaction is crafted to make your users smile while keeping the design simple and purposeful.
+                        </p>
+                    </motion.div>
+                    <motion.div 
+                        variants={fadeInUp}
+                        className="text-lg text-muted-foreground max-w-lg font-basier"
+                    >
+                        <p>
+                            I live in the <span className="text-foreground">sweet spot between design and engineering</span>, creating products that look clean and <span className="text-foreground">feel special</span>.
+                        </p>
+                    </motion.div>
+                    <motion.div 
+                        variants={fadeInUp}
+                        className="flex gap-4 justify-start"
                     >
                         <Link href="https://github.com/colnies" target="_blank" rel="noopener noreferrer">
                             <Button variant="outline" size="icon">
@@ -129,7 +146,7 @@ export default function HomePage() {
                     </motion.div>
                     <motion.div variants={fadeInUp}>
                         <Link href="#projects">
-                            <Button className="mt-8 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
+                            <Button className="mt-2 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
                                 View My Work
                             </Button>
                         </Link>
@@ -137,7 +154,7 @@ export default function HomePage() {
                 </motion.div>
             </motion.section>
 
-            {/* Skills Section */}
+            {/* Skills Section 
             <section className="py-20 px-4">
                 <div className="max-w-6xl mx-auto">
                     <motion.h2 
@@ -190,12 +207,13 @@ export default function HomePage() {
                     </motion.div>
                 </div>
             </section>
+            */}
 
             {/* Featured Projects Section */}
-            <section id="projects" className="py-20 px-4 bg-muted/50">
-                <div className="max-w-6xl mx-auto">
+            <section id="projects" className="py-20 px-4 bg-muted/50 ">
+                <div className="max-w-3xl mx-auto">
                     <motion.h2 
-                        className="text-3xl font-bold text-center mb-12"
+                        className="text-xl font-bold text-left text-muted-foreground mb-6"
                         variants={fadeInUp}
                         initial="hidden"
                         whileInView="visible"
@@ -213,27 +231,34 @@ export default function HomePage() {
                         {projects.map((project, index) => (
                             <motion.div key={project.id} variants={fadeInUp}>
                                 <MotionCard className="overflow-hidden hover:shadow-lg transition-shadow h-full">
-                                    <CardContent className="p-0 flex flex-col h-full">
-                                        <Image 
-                                            src={project.image} 
-                                            alt={project.title}
-                                            width={400}
-                                            height={200}
-                                            className="w-full h-48 object-cover"
-                                            loading={index === 0 ? "eager" : "lazy"}
-                                            sizes="(max-width: 768px) 100vw, 50vw"
-                                        />
-                                        <div className="p-6 flex flex-col flex-grow">
-                                            <h3 className="font-semibold text-lg mb-2">{project.title}</h3>
-                                            <p className="text-muted-foreground flex-grow">
-                                                {project.description}
-                                            </p>
-                                            <div className="mt-4">
-                                                <Link href={project.link} target="_blank" rel="noopener noreferrer">
-                                                    <Button variant="outline" size="sm">
-                                                        View Project <ExternalLink className="ml-2 h-4 w-4" />
-                                                    </Button>
-                                                </Link>
+                                    <CardContent className="p-1 flex flex-col h-full relative group overflow-hidden">
+                                        {/* Gradient border effect */}
+                                        <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-800 via-primary to-sky-800" />
+                                        {/* Content container with background */}
+                                        <div className="relative h-full bg-background rounded-lg">
+                                            <Image 
+                                                src={project.image} 
+                                                alt={project.title}
+                                                width={400}
+                                                height={200}
+                                                className="w-full h-48 object-cover rounded-lg"
+                                                loading={index === 0 ? "eager" : "lazy"}
+                                                sizes="(max-width: 768px) 100vw, 50vw"
+                                            />
+                                            <div className="p-6 flex flex-col flex-grow">
+                                                <h3 className="font-semibold text-lg mb-2 bg-gradient-to-r from-teal-800 via-primary to-sky-800 bg-clip-text text-transparent">
+                                                    {project.title}
+                                                </h3>
+                                                <p className="text-foreground text-sm flex-grow font-basier">
+                                                    {project.description}
+                                                </p>
+                                                <div className="mt-4">
+                                                    <Link href={project.link} target="_blank" rel="noopener noreferrer">
+                                                        <Button variant="outline" size="sm">
+                                                            View Project <ExternalLink className="ml-2 h-4 w-4" />
+                                                        </Button>
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </CardContent>
@@ -247,7 +272,7 @@ export default function HomePage() {
             {/* Contact Section */}
             <section className="py-20 px-4">
                 <motion.div 
-                    className="max-w-2xl mx-auto text-center"
+                    className="pl-2 md:pl-0 max-w-3xl mx-auto"
                     variants={staggerChildren}
                     initial="hidden"
                     whileInView="visible"
@@ -261,13 +286,13 @@ export default function HomePage() {
                     </motion.h2>
                     <motion.p 
                         variants={fadeInUp}
-                        className="text-muted-foreground mb-8"
+                        className="text-muted-foreground mb-8 font-basier"
                     >
                         I'm always interested in hearing about new projects and opportunities.
                     </motion.p>
                     <motion.div variants={fadeInUp}>
                         <Link href="mailto:contact@colinnies.dev">
-                            <Button>
+                            <Button className="hover:bg-gradient-to-r hover:from-teal-800 hover:via-primary hover:to-sky-800 hover:animate-flow hover:bg-[length:200%_auto]">
                                 Get In Touch <Mail className="ml-2 h-4 w-4" />
                             </Button>
                         </Link>
