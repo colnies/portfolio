@@ -53,16 +53,16 @@ const projects = [
     {
         id: 3,
         title: "Union Square Financial",
-        description: "A personal lending platform built with Next.js and Tailwind CSS, integrated with Contentful CMS and PostgreSQL database.",
+        description: "A personal lending platform built with Next.js and Tailwind CSS, integrated with Contentful CMS and a PostgreSQL database.",
         image: "/unionsquare.png",
         link: "https://unionsquarefinancial.com"
     },
     {
         id: 4,
-        title: "Crave Ticket Resellers",
-        description: "A dynamic website for event ticket resellers built with Next.js and Tailwind CSS.",
+        title: "Lindy Promotions",
+        description: "A dynamic website for events in Baltimore & Washington DC. Built with Typescript, Tailwind, and Firebase, featuring dynamic event listings and table booking.",
         image: "/resellers.png",
-        link: "https://cravetickets.com"
+        link: "https://lindypromo.com"
     }
 ];
 
