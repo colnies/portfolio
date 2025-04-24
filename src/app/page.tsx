@@ -38,11 +38,12 @@ const MotionCard = motion(Card);
 const projects = [
     {
         id: 1,
-        title: "Joonbug",
-        description: "A dynamic events promotion platform showcasing nightlife and entertainment across multiple cities. Built with Typescript & Tailwind, featuring interactive events listings, ticket purchasing integration, and responsive design.",
-        image: "/joonbug.png",
-        link: "https://joonbug.com"
+        title: "Lindy Promotions",
+        description: "A dynamic website for events in Baltimore & Washington DC. Built with Typescript, Tailwind, and Firebase, featuring dynamic event listings and table booking.",
+        image: "/lindy-promo.png",
+        link: "https://lindypromo.com"
     },
+    
     {
         id: 2,
         title: "LendSwift",
@@ -59,11 +60,25 @@ const projects = [
     },
     {
         id: 4,
-        title: "Lindy Promotions",
-        description: "A dynamic website for events in Baltimore & Washington DC. Built with Typescript, Tailwind, and Firebase, featuring dynamic event listings and table booking.",
-        image: "/resellers.png",
-        link: "https://lindypromo.com"
-    }
+        title: "Joonbug",
+        description: "A dynamic events promotion platform showcasing nightlife and entertainment across multiple cities. Built with Typescript & Tailwind, featuring interactive events listings, ticket purchasing integration, and responsive design.",
+        image: "/joonbug.png",
+        link: "https://joonbug.com"
+    },
+    {
+        id: 5,
+        title: "Louie the Corgi",
+        description: "A school project showcasing a social media famous corgi named Louie. Built with HTML, Typescript and Vanilla CSS.",
+        image: "/louie.png",
+        link: "https://colnies.github.io/louie-the-corgi/index.html"
+    },
+    {
+        id: 6,
+        title: "New Year's Eve Central",
+        description: "A website for New Year's Eve events across the US. Built with Next.js, Tailwind CSS, and Firebase.",
+        image: "/nyec.png",
+        link: "https://newyearsevecentral.com"
+    },
 ];
 
 export default function HomePage() {
@@ -211,7 +226,7 @@ export default function HomePage() {
 
             {/* Featured Projects Section */}
             <section id="projects" className="py-20 px-4 bg-muted/50 ">
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-6xl mx-auto">
                     <motion.h2 
                         className="text-xl font-bold text-left text-muted-foreground mb-6"
                         variants={fadeInUp}
@@ -222,7 +237,7 @@ export default function HomePage() {
                         Featured Projects
                     </motion.h2>
                     <motion.div 
-                        className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr"
+                        className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr"
                         variants={staggerChildren}
                         initial="hidden"
                         whileInView="visible"
@@ -241,18 +256,18 @@ export default function HomePage() {
                                                 alt={project.title}
                                                 width={400}
                                                 height={200}
-                                                className="w-full h-48 object-cover rounded-lg"
+                                                className="w-full h-48 object-cover rounded-lg p-1"
                                                 loading={index === 0 ? "eager" : "lazy"}
                                                 sizes="(max-width: 768px) 100vw, 50vw"
                                             />
-                                            <div className="p-6 flex flex-col flex-grow">
-                                                <h3 className="font-semibold text-lg mb-2 bg-gradient-to-r from-teal-800 via-primary to-sky-800 bg-clip-text text-transparent">
+                                            <div className="p-4 flex flex-col flex-grow min-h-[220px]">
+                                                <h3 className="font-semibold text-lg mb-1 bg-gradient-to-r from-teal-800 via-primary to-sky-800 bg-clip-text text-transparent">
                                                     {project.title}
                                                 </h3>
                                                 <p className="text-foreground text-sm flex-grow font-basier">
                                                     {project.description}
                                                 </p>
-                                                <div className="mt-4">
+                                                <div className="absolute bottom-1">
                                                     <Link href={project.link} target="_blank" rel="noopener noreferrer">
                                                         <Button variant="outline" size="sm">
                                                             View Project <ExternalLink className="ml-2 h-4 w-4" />
