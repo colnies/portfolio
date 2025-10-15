@@ -99,7 +99,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
         {/* Hero Section */}
         <motion.section
-          className="h-screen flex flex-col pl-2 md:pl-0 max-w-3xl mx-auto relative pt-20"
+          className="min-h-screen mb-12 md:mb-0 flex flex-col pl-2 md:pl-0 max-w-3xl mx-auto relative pt-20"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
