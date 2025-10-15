@@ -122,7 +122,9 @@ export default function HomePage() {
             >
               Web Developer
               <br />
-              Focused on Experience Design.
+              Focused on Experience Design
+              <br />
+              Building at <Link href="https://ukg.com" target="_blank" rel="noopener noreferrer">UKG</Link>
             </motion.p>
             <motion.div
               variants={fadeInUp}
