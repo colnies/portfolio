@@ -40,8 +40,7 @@ const projects = [
   {
     id: 1,
     title: "Lindy Promotions",
-    description:
-      "A dynamic website for events in Baltimore & Washington DC. Built with Typescript, Tailwind, and Firebase, featuring dynamic event listings and table booking.",
+    description: "Next.js • TypeScript • Tailwind • Firebase",
     image: "/lindy-promo.png",
     link: "https://lindypromo.com",
   },
@@ -49,43 +48,38 @@ const projects = [
   {
     id: 2,
     title: "LendSwift",
-    description:
-      "A lending platform that modernizes the loan application process. Developed using Next.js & Styled Components, with a focus on secure user authentication and seamless data handling.",
+    description: "Next.js • Styled Components",
     image: "/lendswift.png",
     link: "https://lendswift.com",
   },
   {
     id: 3,
     title: "Union Square Financial",
-    description:
-      "A personal lending platform built with Next.js and Tailwind CSS, integrated with Contentful CMS and a PostgreSQL database.",
+    description: "Next.js • Tailwind • Contentful • PostgreSQL",
     image: "/unionsquare.png",
     link: "https://unionsquarefinancial.com",
   },
   {
     id: 4,
     title: "Joonbug",
-    description:
-      "A dynamic events promotion platform showcasing nightlife and entertainment across multiple cities. Built with Typescript & Tailwind, featuring interactive events listings, ticket purchasing integration, and responsive design.",
+    description: "Next.js • TypeScript • Tailwind",
     image: "/joonbug.png",
     link: "https://joonbug.com",
   },
   {
     id: 5,
     title: "Louie the Corgi",
-    description:
-      "A school project showcasing a social media famous corgi named Louie. Built with HTML, Typescript and Vanilla CSS.",
+    description: "HTML • TypeScript • CSS",
     image: "/louie.png",
     link: "https://colnies.github.io/louie-the-corgi/index.html",
   },
   {
     id: 6,
     title: "In-house Admin Dashboard",
-    description:
-      "A comprehensive event management platform built with Next.js, Material-UI, and TypeScript. Handles complete event lifecycle management including event creation, venue management, ticketing systems, organizer administration, assignment controls, and analytics.",
+    description: "Next.js • TypeScript • Material-UI",
     image: "/getout-admin.png",
-    link: "",
-    },
+    link: "https://dashboard.joonbug.com",
+  },
 ];
 
 export default function HomePage() {
@@ -286,7 +280,7 @@ export default function HomePage() {
                   <MotionCard className="overflow-hidden hover:shadow-lg transition-shadow h-full">
                     <CardContent className="p-1 flex flex-col h-full relative group overflow-hidden">
                       {/* Gradient border effect */}
-                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-teal-800 via-primary to-sky-800" />
+                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-70 transition-opacity duration-700 bg-gradient-to-r from-teal-800 via-primary to-sky-800" />
                       {/* Content container with background */}
                       <div className="relative h-full bg-background rounded-lg">
                         <Image
@@ -299,7 +293,7 @@ export default function HomePage() {
                           sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         <div className="p-4 flex flex-col flex-grow min-h-[220px]">
-                          <h3 className="font-semibold text-lg mb-1 bg-gradient-to-r from-teal-800 via-primary to-sky-800 bg-clip-text text-transparent">
+                          <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:bg-gradient-to-r group-hover:from-teal-800 group-hover:via-primary group-hover:to-sky-800 group-hover:bg-clip-text group-hover:text-transparent group-hover:animate-flow group-hover:bg-[length:200%_auto] transition-all duration-700">
                             {project.title}
                           </h3>
                           <p className="text-foreground text-sm flex-grow font-basier">
