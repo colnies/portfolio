@@ -5,6 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { BinaryPuzzle } from "./BinaryPuzzle";
+
+const PUZZLE_COMPLETE_KEY = "portfolio-puzzle-complete";
 
 const projects = [
   {
@@ -62,7 +65,20 @@ export function FeaturedProjects() {
   const [direction, setDirection] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState<boolean | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Check localStorage on mount
+  useEffect(() => {
+    const completed = localStorage.getItem(PUZZLE_COMPLETE_KEY);
+    setIsUnlocked(completed === "true");
+  }, []);
+
+  // Handle puzzle completion
+  const handlePuzzleComplete = useCallback(() => {
+    localStorage.setItem(PUZZLE_COMPLETE_KEY, "true");
+    setIsUnlocked(true);
+  }, []);
 
   const paginate = useCallback((newDirection: number) => {
     setDirection(newDirection);
@@ -125,6 +141,30 @@ export function FeaturedProjects() {
   };
 
   const currentProject = projects[activeIndex];
+
+  // Show loading state while checking localStorage
+  if (isUnlocked === null) {
+    return (
+      <section id="projects" className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="h-64 flex items-center justify-center">
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show puzzle if not unlocked
+  if (!isUnlocked) {
+    return (
+      <section id="projects" className="py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <BinaryPuzzle onComplete={handlePuzzleComplete} />
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="projects" className="py-20 px-4">
