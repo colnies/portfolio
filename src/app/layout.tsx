@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://colinnies.dev'),
     title: 'Colin Nies',
     description: 'Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences',
     openGraph: {
@@ -43,17 +44,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${dejaVu.variable} ${basier.variable}`} suppressHydrationWarning>
-            <body
-                className={` antialiased`}
-            >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
+      <body className="antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

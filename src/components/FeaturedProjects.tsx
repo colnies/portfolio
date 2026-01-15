@@ -273,17 +273,6 @@ export function FeaturedProjects() {
                       {currentProject.description}
                     </motion.p>
 
-                    {/* Long description
-                    <motion.p
-                      key={`long-${activeIndex}`}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.25, duration: 0.5 }}
-                      className="text-sm md:text-base text-white/60 mb-6 max-w-lg font-basier"
-                    >
-                      {currentProject.longDescription}
-                    </motion.p>
-                    */}
                     {/* CTA Button with frosted glass */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
@@ -375,15 +364,6 @@ export function FeaturedProjects() {
           ))}
         </div>
 
-        {/* Keyboard hint
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="text-center text-xs text-muted-foreground mt-4 hidden md:block"
-        >
-          Use arrow keys or swipe to navigate
-        </motion.p> */}
       </div>
     </section>
   );

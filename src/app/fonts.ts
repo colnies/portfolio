@@ -27,13 +27,12 @@ export const dejaVu = localFont({
 })
 
 export const basier = localFont({
-    src: [
-      {
-        path: '../../public/fonts/BasierCircle-Regular.otf',
-        weight: '500',
-        style: 'normal',
-      },
-    ],
-    variable: '--font-basier'
-  })
-  
+  src: [
+    {
+      path: '../../public/fonts/BasierCircle-Regular.otf',
+      weight: '500',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-basier'
+})

@@ -81,6 +81,7 @@ export function BinaryPuzzle({ onComplete }: BinaryPuzzleProps) {
   const [isComplete, setIsComplete] = useState(false);
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [showRules, setShowRules] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
 
@@ -100,7 +101,7 @@ export function BinaryPuzzle({ onComplete }: BinaryPuzzleProps) {
     setGrid(initialGrid);
   }, []);
 
-  // RAF loop for smooth animations
+  // RAF loop for smooth animations - only runs when needed
   const animate = useCallback((time: number) => {
     if (time - lastTimeRef.current > 16) { // ~60fps
       lastTimeRef.current = time;
@@ -116,6 +117,12 @@ export function BinaryPuzzle({ onComplete }: BinaryPuzzleProps) {
             return cell;
           })
         );
+
+        // Stop animation loop if no more changes needed
+        if (!hasChanges) {
+          setIsAnimating(false);
+        }
+
         return hasChanges ? newGrid : prevGrid;
       });
     }
@@ -123,14 +130,17 @@ export function BinaryPuzzle({ onComplete }: BinaryPuzzleProps) {
     animationRef.current = requestAnimationFrame(animate);
   }, []);
 
+  // Only run RAF loop when animating
   useEffect(() => {
-    animationRef.current = requestAnimationFrame(animate);
+    if (isAnimating) {
+      animationRef.current = requestAnimationFrame(animate);
+    }
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [animate]);
+  }, [animate, isAnimating]);
 
   // Check for rule violations
   const checkErrors = useCallback((currentGrid: Grid): Set<string> => {
@@ -207,6 +217,9 @@ export function BinaryPuzzle({ onComplete }: BinaryPuzzleProps) {
   // Handle cell click
   const handleCellClick = (row: number, col: number) => {
     if (grid[row][col].locked || isComplete) return;
+
+    // Start animation loop
+    setIsAnimating(true);
 
     setGrid((prevGrid) => {
       const newGrid = prevGrid.map((r, ri) =>

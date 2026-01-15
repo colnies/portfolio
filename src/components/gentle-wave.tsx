@@ -23,12 +23,15 @@ export const WaveBackground = () => {
         delay: number;
         baseOpacity: number;
     }[]>([]);
-    
+
     useEffect(() => {
+        // Reduce particle count on mobile for better performance
+        const isMobile = window.innerWidth < 768;
+
         // Wave particles
-        const waveCount = 100;
-        const particleSpacing = 20; // Space between wave particles
-        const totalWidth = waveCount * particleSpacing; // Total width covered by waves
+        const waveCount = isMobile ? 50 : 100;
+        const particleSpacing = 20;
+        const totalWidth = waveCount * particleSpacing;
         const newWaveParticles = [];
         
         for (let i = 0; i < waveCount; i++) {
@@ -42,8 +45,8 @@ export const WaveBackground = () => {
             });
         }
         
-        // Surface particles
-        const surfaceCount = 350;
+        // Surface particles - reduced on mobile
+        const surfaceCount = isMobile ? 150 : 350;
         const newSurfaceParticles = [];
         
         for (let i = 0; i < surfaceCount; i++) {

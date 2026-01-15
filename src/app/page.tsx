@@ -138,61 +138,6 @@ export default function HomePage() {
           </motion.div>
         </motion.section>
 
-        {/* Skills Section 
-            <section className="py-20 px-4">
-                <div className="max-w-6xl mx-auto">
-                    <motion.h2 
-                        className="text-3xl font-bold text-center mb-12"
-                        variants={fadeInUp}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                    >
-                        What I Do
-                    </motion.h2>
-                    <motion.div 
-                        className="grid grid-cols-1 md:grid-cols-3 gap-6"
-                        variants={staggerChildren}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                    >
-                        {[
-                            {
-                                icon: <Layout className="h-6 w-6 text-primary" />,
-                                title: "Full Stack Development",
-                                description: "Building responsive, intuitive web applications with React, Next.js, and modern design systems."
-                            },
-                            {
-                                icon: <Palette className="h-6 w-6 text-primary" />,
-                                title: "Product Design",
-                                description: "Creating user-centered designs with a focus on usability, accessibility, and delightful interactions."
-                            },
-                            {
-                                icon: <Lightbulb className="h-6 w-6 text-primary" />,
-                                title: "UX Research",
-                                description: "Conducting user research and translating insights into meaningful product improvements."
-                            }
-                        ].map((skill, index) => (
-                            <motion.div key={index} variants={fadeInUp}>
-                                <MotionCard className="bg-card hover:shadow-lg transition-shadow">
-                                    <CardContent className="pt-6">
-                                        <div className="rounded-full bg-primary/10 w-12 h-12 flex items-center justify-center mb-4">
-                                            {skill.icon}
-                                        </div>
-                                        <h3 className="font-semibold text-lg mb-2">{skill.title}</h3>
-                                        <p className="text-muted-foreground">
-                                            {skill.description}
-                                        </p>
-                                    </CardContent>
-                                </MotionCard>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
-            */}
-
         {/* Featured Projects Section */}
         <FeaturedProjects />
 
