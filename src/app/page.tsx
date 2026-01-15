@@ -2,13 +2,13 @@
 import React from 'react';
 import { cubicBezier, motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
-import Image from 'next/image';
 import { WaveBackground } from '@/components/gentle-wave';
 import GitHubCalendar from "react-github-calendar";
+import { FeaturedProjects } from '@/components/FeaturedProjects';
+import { SlotMachine } from '@/components/SlotMachine';
 
 // Animation variants
 const fadeInUp = {
@@ -33,55 +33,6 @@ const staggerChildren = {
   }
 };
 
-// Wrap the Card component with motion
-const MotionCard = motion(Card);
-
-const projects = [
-  {
-    id: 1,
-    title: "Lindy Promotions",
-    description: "Next.js • TypeScript • Tailwind • Firebase",
-    image: "/lindy-promo.png",
-    link: "https://lindypromo.com",
-  },
-
-  {
-    id: 2,
-    title: "LendSwift",
-    description: "Next.js • Styled Components",
-    image: "/lendswift.png",
-    link: "https://lendswift.com",
-  },
-  {
-    id: 3,
-    title: "Union Square Financial",
-    description: "Next.js • Tailwind • Contentful • PostgreSQL",
-    image: "/unionsquare.png",
-    link: "https://unionsquarefinancial.com",
-  },
-  {
-    id: 4,
-    title: "Joonbug",
-    description: "Next.js • TypeScript • Tailwind",
-    image: "/joonbug.png",
-    link: "https://joonbug.com",
-  },
-  {
-    id: 5,
-    title: "Louie the Corgi",
-    description: "HTML • TypeScript • CSS",
-    image: "/louie.png",
-    link: "https://colnies.github.io/louie-the-corgi/index.html",
-  },
-  {
-    id: 6,
-    title: "In-house Admin Dashboard",
-    description: "Next.js • TypeScript • Material-UI",
-    image: "/getout-admin.png",
-    link: "https://dashboard.joonbug.com",
-  },
-];
-
 export default function HomePage() {
     return (
       <div className="min-h-screen bg-background transition-colors duration-700">
@@ -104,46 +55,35 @@ export default function HomePage() {
             initial="hidden"
             animate="visible"
           >
-            <motion.h1
-              variants={fadeInUp}
+            <h1
               className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]"
             >
               Colin Nies
-            </motion.h1>
-            <motion.p
-              variants={fadeInUp}
+            </h1>
+            <p
               className="text-xl md:text-2xl text-foreground uppercase"
             >
               Web Developer
               <br />
               Focused on Experience Design
               <br />
-              Building at <Link href="https://ukg.com" target="_blank" rel="noopener noreferrer">UKG</Link>
-            </motion.p>
-            <motion.div
-              variants={fadeInUp}
-              className="text-lg text-muted-foreground max-w-md font-basier"
-            >
+              Building at <Link href="https://ukg.com" target="_blank" rel="noopener noreferrer"><SlotMachine text="UKG" every={8000} /></Link>
+            </p>
+            <div className="text-lg text-muted-foreground max-w-md font-basier">
               <p>
                 Currently pursuing my Master's in{" "}
                 <span className="text-foreground">Product Design</span> at{" "}
                 <span className="text-foreground">Rutgers University</span>
               </p>
-            </motion.div>
-            <motion.div
-              variants={fadeInUp}
-              className="text-lg text-muted-foreground max-w-md font-basier"
-            >
+            </div>
+            <div className="text-lg text-muted-foreground max-w-md font-basier">
               <p>
                 Building fast apps where every small interaction is crafted to
                 make your users smile while keeping the design simple and
                 purposeful.
               </p>
-            </motion.div>
-            <motion.div
-              variants={fadeInUp}
-              className="text-lg text-muted-foreground max-w-lg font-basier"
-            >
+            </div>
+            <div className="text-lg text-muted-foreground max-w-lg font-basier">
               <p>
                 I live in the{" "}
                 <span className="text-foreground">
@@ -152,11 +92,8 @@ export default function HomePage() {
                 , creating products that look clean and{" "}
                 <span className="text-foreground">feel special</span>.
               </p>
-            </motion.div>
-            <motion.div
-              variants={fadeInUp}
-              className="flex gap-4 justify-start"
-            >
+            </div>
+            <div className="flex gap-4 justify-start">
               <Link
                 href="https://github.com/colnies"
                 target="_blank"
@@ -180,14 +117,14 @@ export default function HomePage() {
                   <Mail className="h-5 w-5" />
                 </Button>
               </Link>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
+            </div>
+            <div>
               <Link href="#projects">
                 <Button className="mt-2 bg-gradient-to-r from-teal-800 via-primary to-sky-800 animate-flow bg-[length:200%_auto]">
                   View My Work
                 </Button>
               </Link>
-            </motion.div>
+            </div>
             <GitHubCalendar
               username="colnies"
               blockSize={9}
@@ -257,69 +194,7 @@ export default function HomePage() {
             */}
 
         {/* Featured Projects Section */}
-        <section id="projects" className="py-20 px-4 bg-muted/50 ">
-          <div className="max-w-6xl mx-auto">
-            <motion.h2
-              className="text-xl font-bold text-left text-muted-foreground mb-6"
-              variants={fadeInUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              Featured Projects
-            </motion.h2>
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-fr"
-              variants={staggerChildren}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              {projects.map((project, index) => (
-                <motion.div key={project.id} variants={fadeInUp}>
-                  <MotionCard className="overflow-hidden hover:shadow-lg transition-shadow h-full">
-                    <CardContent className="p-1 flex flex-col h-full relative group overflow-hidden">
-                      {/* Gradient border effect */}
-                      <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-70 transition-opacity duration-700 bg-gradient-to-r from-teal-800 via-primary to-sky-800" />
-                      {/* Content container with background */}
-                      <div className="relative h-full bg-background rounded-lg">
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          width={400}
-                          height={200}
-                          className="w-full h-48 object-cover rounded-lg p-1"
-                          loading={index === 0 ? "eager" : "lazy"}
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                        <div className="p-4 flex flex-col flex-grow min-h-[220px]">
-                          <h3 className="font-semibold text-lg mb-1 text-foreground group-hover:bg-gradient-to-r group-hover:from-teal-800 group-hover:via-primary group-hover:to-sky-800 group-hover:bg-clip-text group-hover:text-transparent group-hover:animate-flow group-hover:bg-[length:200%_auto] transition-all duration-700">
-                            {project.title}
-                          </h3>
-                          <p className="text-foreground text-sm flex-grow font-basier">
-                            {project.description}
-                          </p>
-                          <div className="absolute bottom-1">
-                            <Link
-                              href={project.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <Button variant="outline" size="sm">
-                                View Project{" "}
-                                <ExternalLink className="ml-2 h-4 w-4" />
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </MotionCard>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
+        <FeaturedProjects />
 
         {/* Contact Section */}
         <section className="py-20 px-4">
