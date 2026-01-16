@@ -61,18 +61,15 @@ export default function App() {
             Focused on Experience Design
             <br />
             Building at{" "}
-            <a
-              href="https://ukg.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://ukg.com" target="_blank" rel="noopener noreferrer">
               <SlotMachine text="UKG" every={8000} />
             </a>
           </p>
           <div className="text-lg text-muted-foreground max-w-md font-basier">
             <p>
-              Currently pursuing my Master's in{" "}
-              <span className="text-foreground">Product Design</span> at{" "}
+              Currently pursuing my Master's in{" "}<br/>
+              <span className="text-foreground">Engineering Management</span> {" & "} 
+              <span className="text-foreground">Product Design</span><br/> at{" "}
               <span className="text-foreground">Rutgers University</span>
             </p>
           </div>
