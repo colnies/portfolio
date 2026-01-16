@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { BinaryPuzzle } from "./BinaryPuzzle";
 
 const PUZZLE_COMPLETE_KEY = "portfolio-puzzle-complete";
@@ -208,13 +206,11 @@ export function FeaturedProjects() {
             >
               {/* Project image */}
               <div className="relative w-full h-full">
-                <Image
+                <img
                   src={currentProject.image}
                   alt={currentProject.title}
-                  fill
-                  className="object-cover object-top"
-                  priority={activeIndex === 0}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
+                  loading={activeIndex === 0 ? "eager" : "lazy"}
                 />
 
                 {/* Gradient overlay for text legibility - only on hover */}
@@ -279,7 +275,7 @@ export function FeaturedProjects() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3, duration: 0.5 }}
                     >
-                      <Link
+                      <a
                         href={currentProject.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -287,7 +283,7 @@ export function FeaturedProjects() {
                       >
                         View Project
                         <ExternalLink className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                      </Link>
+                      </a>
                     </motion.div>
                   </div>
                 </motion.div>
