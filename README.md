@@ -1,27 +1,31 @@
 # Colin Nies Portfolio
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+A modern, interactive portfolio website built with React, TypeScript, Vite, and Tailwind CSS.
 
 ## Features
 
-- Responsive design that works on all devices
-- Dark/light theme support
-- Smooth scrolling navigation
-- Project showcase section
-- Contact information and social links
-- Built with modern tech stack:
-  - Next.js 14
-  - TypeScript
-  - Tailwind CSS
-  - shadcn/ui components
-  - Lucide icons
+- **Interactive Binary Puzzle** — A 4x4 binary puzzle gate that unlocks the project showcase
+- **Slot Machine Text Effect** — Animated character-cycling text transitions
+- **Featured Projects Carousel** — Auto-playing, keyboard-navigable image carousel with drag/swipe support
+- **Animated Wave Background** — Particle-based wave effect, performance-optimized for mobile
+- **Dark/Light Theme** — System-aware theme toggle with localStorage persistence
+- **GitHub Activity Calendar** — Live contribution graph integration
+- **Responsive Design** — Mobile-first layout across all components
+
+## Tech Stack
+
+- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) (build tool & dev server)
+- [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Framer Motion](https://www.framer.com/motion/) (animations)
+- [Lucide Icons](https://lucide.dev/)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18.17 or later
-- npm or yarn
+- Node.js 18 or later
+- npm
 
 ### Installation
 
@@ -34,44 +38,51 @@ cd portfolio
 2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
 ```
 
-3. Run the development server:
+3. Start the development server:
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Build for Production
+
+```bash
+npm run build    # TypeScript check + Vite build
+npm run preview  # Preview the production build locally
+```
 
 ## Project Structure
 
 ```
 portfolio/
-├── app/
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/
-│   │   └── [shadcn components]
-│   └── theme-toggle.tsx
+├── src/
+│   ├── components/
+│   │   ├── ui/              # shadcn/ui components
+│   │   ├── BinaryPuzzle.tsx # Interactive puzzle unlock
+│   │   ├── SlotMachine.tsx  # Animated text effect
+│   │   ├── FeaturedProjects.tsx # Project carousel
+│   │   ├── gentle-wave.tsx  # Particle wave background
+│   │   ├── theme-provider.tsx
+│   │   └── theme-toggle.tsx
+│   ├── lib/
+│   │   └── utils.ts
+│   ├── App.tsx              # Main app component
+│   ├── main.tsx             # Entry point
+│   └── index.css            # Global styles + Tailwind
 ├── public/
-│   └── [images and assets]
-├── styles/
-│   └── globals.css
-└── [config files]
+│   ├── fonts/               # Custom fonts
+│   ├── images/              # Project screenshots
+│   └── ...                  # SVG assets, robots.txt, sitemap.xml
+├── index.html
+├── vite.config.ts
+├── tailwind.config.ts
+├── tsconfig.json
+└── package.json
 ```
-
-## Customization
-
-1. Update the metadata in `page.tsx` with your information
-2. Replace project images in the `public` directory
-3. Modify the `projects` array in `page.tsx` with your own projects
-4. Update social links and contact information
 
 ## License
 
-MIT License - feel free to use this project as a template for your own portfolio!
+MIT License — feel free to use this project as a template for your own portfolio!
