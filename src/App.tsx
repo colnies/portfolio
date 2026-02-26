@@ -56,7 +56,7 @@ export default function App() {
             Colin Nies
           </h1>
           <p className="text-xl md:text-2xl text-foreground uppercase">
-            Web Developer
+            Software Engineer
             <br />
             Focused on Experience Design
             <br />
@@ -73,13 +73,13 @@ export default function App() {
               <span className="text-foreground">Rutgers University</span>
             </p>
           </div>
-          <div className="text-lg text-muted-foreground max-w-md font-basier">
+          {/*<div className="text-lg text-muted-foreground max-w-md font-basier">
             <p>
               Building fast apps where every small interaction is crafted to
               make your users smile while keeping the design simple and
               purposeful.
             </p>
-          </div>
+          </div>*/}
           <div className="text-lg text-muted-foreground max-w-lg font-basier">
             <p>
               I live in the{" "}
