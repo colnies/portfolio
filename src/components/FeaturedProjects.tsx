@@ -17,9 +17,9 @@ const projects = [
     link: "https://github.com/colnies/sleep-detective",
   },
   {
-    title: "Louie the Corgi",
-    tags: ["HTML", "TypeScript", "CSS"],
-    link: "https://colnies.github.io/louie-the-corgi/index.html",
+    title: "Skybreak Events",
+    tags: ["Next.js", "TypeScript", "Tailwind"],
+    link: "https://skybreakevents.com",
   },
   {
     title: "LendSwift",
@@ -27,14 +27,9 @@ const projects = [
     link: "https://lendswift.com",
   },
   {
-    title: "Union Square Financial",
-    tags: ["Next.js", "Tailwind", "Contentful", "PostgreSQL"],
-    link: "https://unionsquarefinancial.com",
-  },
-  {
-    title: "Joonbug",
-    tags: ["Next.js", "TypeScript", "Tailwind"],
-    link: "https://joonbug.com",
+    title: "Louie the Corgi",
+    tags: ["HTML", "TypeScript", "CSS"],
+    link: "https://colnies.github.io/louie-the-corgi/index.html",
   },
   {
     title: "Lindy Promotions",
