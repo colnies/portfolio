@@ -6,6 +6,7 @@ import { WaveBackground } from "@/components/gentle-wave";
 import GitHubCalendar from "react-github-calendar";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
+import { AsciiHands } from "@/components/AsciiArt";
 
 // Animation variants
 const fadeInUp = {
@@ -67,9 +68,8 @@ export default function App() {
           </p>
           <div className="text-lg text-muted-foreground max-w-md font-basier">
             <p>
-              Currently pursuing my Master's in{" "}<br/>
-              <span className="text-foreground">Engineering Management</span> {" & "} 
-              <span className="text-foreground">Product Design</span><br/> at{" "}
+              Currently pursuing my Master's in{" "}
+              <span className="text-foreground">Technology Management</span> at{" "}
               <span className="text-foreground">Rutgers University</span>
             </p>
           </div>
@@ -140,31 +140,32 @@ export default function App() {
 
       {/* Contact Section */}
       <section className="py-20 px-4">
-        <motion.div
-          className="pl-2 md:pl-0 max-w-3xl mx-auto"
-          variants={staggerChildren}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <motion.h2 variants={fadeInUp} className="text-3xl font-bold mb-6">
-            Let's Work Together
-          </motion.h2>
-          <motion.p
-            variants={fadeInUp}
-            className="text-muted-foreground mb-8 font-basier"
+        <div className="pl-2 md:pl-0 max-w-3xl mx-auto">
+          <motion.div
+            variants={staggerChildren}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
           >
-            I'm always interested in hearing about new projects and
-            opportunities.
-          </motion.p>
-          <motion.div variants={fadeInUp}>
-            <a href="mailto:contact@colinnies.dev">
-              <Button className="hover:bg-gradient-to-r hover:from-teal-800 hover:via-primary hover:to-sky-800 hover:animate-flow hover:bg-[length:200%_auto]">
-                Get In Touch <Mail className="ml-2 h-4 w-4" />
-              </Button>
-            </a>
+            <motion.h2 variants={fadeInUp} className="text-3xl font-bold mb-6">
+              Let's Work Together
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              className="text-muted-foreground mb-8 font-basier"
+            >
+              I'm always interested in hearing about new projects and
+              opportunities.
+            </motion.p>
+            <motion.div variants={fadeInUp}>
+              <a href="mailto:contact@colinnies.dev">
+                <Button className="hover:bg-gradient-to-r hover:from-teal-800 hover:via-primary hover:to-sky-800 hover:animate-flow hover:bg-[length:200%_auto]">
+                  Get In Touch <Mail className="ml-2 h-4 w-4" />
+                </Button>
+              </a>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
     </div>
   );
