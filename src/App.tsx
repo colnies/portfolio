@@ -6,7 +6,6 @@ import { WaveBackground } from "@/components/gentle-wave";
 import GitHubCalendar from "react-github-calendar";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
-import { AsciiHands } from "@/components/AsciiArt";
 
 // Animation variants
 const fadeInUp = {
