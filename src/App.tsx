@@ -4,6 +4,7 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { WaveBackground } from "@/components/gentle-wave";
 import GitHubCalendar from "react-github-calendar";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
 
@@ -41,13 +42,13 @@ export default function App() {
       <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
       {/* Hero Section */}
       <motion.section
-        className="min-h-screen mb-12 md:mb-0 flex flex-col pl-2 md:pl-0 max-w-3xl mx-auto relative pt-20"
+        className="min-h-screen mb-12 md:mb-0 relative pt-20 px-6 md:px-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
         <motion.div
-          className="z-10 text-left space-y-6 px-4"
+          className="relative z-10 max-w-3xl mx-auto text-left space-y-6"
           variants={staggerChildren}
           initial="hidden"
           animate="visible"
@@ -61,7 +62,12 @@ export default function App() {
             Focused on Experience Design
             <br />
             Building at{" "}
-            <a href="https://ukg.com" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://ukg.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-4 hover:underline"
+            >
               <SlotMachine text="UKG" every={8000} />
             </a>
           </p>
@@ -72,13 +78,6 @@ export default function App() {
               <span className="text-foreground">Rutgers University</span>
             </p>
           </div>
-          {/*<div className="text-lg text-muted-foreground max-w-md font-basier">
-            <p>
-              Building fast apps where every small interaction is crafted to
-              make your users smile while keeping the design simple and
-              purposeful.
-            </p>
-          </div>*/}
           <div className="text-lg text-muted-foreground max-w-lg font-basier">
             <p>
               I live in the{" "}
@@ -95,7 +94,7 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" aria-label="GitHub">
                 <Github className="h-5 w-5" />
               </Button>
             </a>
@@ -104,12 +103,12 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" aria-label="LinkedIn">
                 <Linkedin className="h-5 w-5" />
               </Button>
             </a>
             <a href="mailto:contact@colinnies.dev">
-              <Button variant="outline" size="icon">
+              <Button variant="outline" size="icon" aria-label="Email">
                 <Mail className="h-5 w-5" />
               </Button>
             </a>
@@ -121,16 +120,19 @@ export default function App() {
               </Button>
             </a>
           </div>
-          <GitHubCalendar
-            username="colnies"
-            blockSize={9}
-            blockMargin={4}
-            theme={{
-              light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-              dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-            }}
-            fontSize={16}
-          />
+          <ErrorBoundary>
+            <GitHubCalendar
+              username="colnies"
+              blockSize={9}
+              blockMargin={4}
+              theme={{
+                light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+                dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+              }}
+              fontSize={16}
+              throwOnError
+            />
+          </ErrorBoundary>
         </motion.div>
       </motion.section>
 
@@ -138,8 +140,8 @@ export default function App() {
       <FeaturedProjects />
 
       {/* Contact Section */}
-      <section className="py-20 px-4">
-        <div className="pl-2 md:pl-0 max-w-3xl mx-auto">
+      <section className="py-20 px-6 md:px-4">
+        <div className="max-w-3xl mx-auto">
           <motion.div
             variants={staggerChildren}
             initial="hidden"
@@ -166,6 +168,40 @@ export default function App() {
           </motion.div>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="py-8 px-6 md:px-4 border-t border-border">
+        <div className="max-w-3xl mx-auto flex items-center justify-between text-sm text-muted-foreground">
+          <span>© {new Date().getFullYear()} Colin Nies</span>
+          <div className="flex items-center gap-5">
+            <a
+              href="https://github.com/colnies"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="transition-colors hover:text-foreground"
+            >
+              <Github className="h-4 w-4" />
+            </a>
+            <a
+              href="https://linkedin.com/in/colin-nies"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="transition-colors hover:text-foreground"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href="mailto:contact@colinnies.dev"
+              aria-label="Email"
+              className="transition-colors hover:text-foreground"
+            >
+              <Mail className="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

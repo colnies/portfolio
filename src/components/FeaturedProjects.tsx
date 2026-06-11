@@ -39,14 +39,14 @@ const projects = [
 ];
 
 const companies = [
-  { name: "UKG", logo: "/logos/ukg.png" },
-  { name: "Daialog", logo: "/logos/daialog.png" },
-  { name: "GigFi", logo: "/logos/gigfi.svg" },
-  { name: "LendSwift", logo: "/logos/lendswift.webp" },
-  { name: "Union Square Financial", logo: "/logos/union-square.png" },
-  { name: "Lindy Promotions", logo: "/logos/lindys.svg" },
-  { name: "Joonbug", logo: "/logos/joonbug.svg" },
-  { name: "Skynet Media", logo: "/logos/skynet.png" },
+  "UKG",
+  "Daialog",
+  "GigFi",
+  "LendSwift",
+  "Union Square Financial",
+  "Lindy Promotions",
+  "Joonbug",
+  "Skynet Media",
 ];
 
 const fadeInUp = {
@@ -119,8 +119,8 @@ export function FeaturedProjects() {
   const [containerRef, containerWidth] = useContainerWidth<HTMLDivElement>();
 
   return (
-    <section id="projects" className="py-20 px-4">
-      <div className="pl-2 md:pl-0 max-w-3xl mx-auto" ref={containerRef}>
+    <section id="projects" className="py-20 px-6 md:px-4">
+      <div className="max-w-3xl mx-auto" ref={containerRef}>
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -131,15 +131,14 @@ export function FeaturedProjects() {
           <h3 className="text-base font-medium tracking-widest uppercase text-muted-foreground mb-8">
             Worked With
           </h3>
-          <div className="flex flex-wrap items-center gap-8">
+          <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
             {companies.map((company) => (
-              <img
-                key={company.name}
-                src={company.logo}
-                alt={company.name}
-                title={company.name}
-                className="h-12 w-32 object-contain grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 dark:opacity-40 dark:hover:opacity-100 dark:mix-blend-screen mix-blend-multiply"
-              />
+              <span
+                key={company}
+                className="text-sm text-muted-foreground/60 transition-colors duration-300 hover:text-foreground whitespace-nowrap"
+              >
+                {company}
+              </span>
             ))}
           </div>
         </motion.div>

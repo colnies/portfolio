@@ -6,7 +6,7 @@
 @font-face {
   font-family: 'DejaVu Sans Mono';
   src: url('/fonts/DejaVuSansMono.ttf') format('truetype');
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -21,24 +21,24 @@
 
 @font-face {
   font-family: 'DejaVu Sans Mono';
-  src: url('/fonts/DejaVuSansMono-BoldOblique.ttf') format('truetype');
-  font-weight: 800;
-  font-style: normal;
+  src: url('/fonts/DejaVuSansMono-Oblique.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'DejaVu Sans Mono';
-  src: url('/fonts/DejaVuSansMono-Oblique.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
+  src: url('/fonts/DejaVuSansMono-BoldOblique.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Basier Circle';
   src: url('/fonts/BasierCircle-Regular.otf') format('opentype');
-  font-weight: 500;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
