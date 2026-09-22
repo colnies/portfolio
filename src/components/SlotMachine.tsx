@@ -1,110 +1,93 @@
-"use client";
-
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 interface SlotMachineProps {
   text: string;
   className?: string;
+  /** How often the spin replays, in milliseconds */
   every?: number;
 }
 
-const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-interface SlotState {
+interface Slot {
   char: string;
   isSpinning: boolean;
+  /** Changes on every character swap so AnimatePresence re-animates */
   key: number;
 }
+
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const SPINS_PER_LETTER = 12;
+const SPIN_INTERVAL_MS = 60;
+const LETTER_STAGGER_MS = 150;
+
+const randomLetter = () =>
+  ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
 
 export function SlotMachine({
   text,
   className = "",
-  every = 8000
+  every = 8000,
 }: SlotMachineProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
-  const [slots, setSlots] = useState<SlotState[]>(
+  const [slots, setSlots] = useState<Slot[]>(() =>
     text.split("").map((char, i) => ({ char, isSpinning: false, key: i }))
   );
   const isAnimatingRef = useRef(false);
-  const intervalsRef = useRef<NodeJS.Timeout[]>([]);
+  const timersRef = useRef<ReturnType<typeof setInterval>[]>([]);
   const keyCounterRef = useRef(text.length);
 
   useEffect(() => {
     if (!isInView) return;
 
-    const runAnimation = () => {
+    const setSlot = (index: number, char: string, isSpinning: boolean) => {
+      keyCounterRef.current += 1;
+      const key = keyCounterRef.current;
+      setSlots((prev) =>
+        prev.map((slot, i) => (i === index ? { char, isSpinning, key } : slot))
+      );
+    };
+
+    const clearTimers = () => {
+      timersRef.current.forEach(clearInterval);
+      timersRef.current = [];
+    };
+
+    const spin = () => {
       if (isAnimatingRef.current) return;
-
       isAnimatingRef.current = true;
+      clearTimers();
+
       const letters = text.split("");
-      const iterations = 12;
-      const intervalTime = 60;
-
-      intervalsRef.current.forEach(clearInterval);
-      intervalsRef.current = [];
-
-      letters.forEach((targetLetter, letterIndex) => {
-        const letterDelay = letterIndex * 150;
-
-        setTimeout(() => {
-          // Start spinning
-          setSlots((prev) => {
-            const newSlots = [...prev];
-            newSlots[letterIndex] = { ...newSlots[letterIndex], isSpinning: true };
-            return newSlots;
-          });
-
+      letters.forEach((target, index) => {
+        const start = setTimeout(() => {
           let count = 0;
-
-          const letterInterval = setInterval(() => {
-            count++;
-
-            if (count <= iterations) {
-              const newChar = characters[Math.floor(Math.random() * characters.length)];
-              keyCounterRef.current++;
-              setSlots((prev) => {
-                const newSlots = [...prev];
-                newSlots[letterIndex] = {
-                  char: newChar,
-                  isSpinning: true,
-                  key: keyCounterRef.current
-                };
-                return newSlots;
-              });
-            } else {
-              keyCounterRef.current++;
-              setSlots((prev) => {
-                const newSlots = [...prev];
-                newSlots[letterIndex] = {
-                  char: targetLetter,
-                  isSpinning: false,
-                  key: keyCounterRef.current
-                };
-                return newSlots;
-              });
-              clearInterval(letterInterval);
-
-              if (letterIndex === letters.length - 1) {
-                setTimeout(() => {
-                  isAnimatingRef.current = false;
-                }, 100);
-              }
+          const tick = setInterval(() => {
+            count += 1;
+            if (count <= SPINS_PER_LETTER) {
+              setSlot(index, randomLetter(), true);
+              return;
             }
-          }, intervalTime);
-
-          intervalsRef.current.push(letterInterval);
-        }, letterDelay);
+            setSlot(index, target, false);
+            clearInterval(tick);
+            if (index === letters.length - 1) {
+              setTimeout(() => {
+                isAnimatingRef.current = false;
+              }, 100);
+            }
+          }, SPIN_INTERVAL_MS);
+          timersRef.current.push(tick);
+        }, index * LETTER_STAGGER_MS);
+        timersRef.current.push(start);
       });
     };
 
-    runAnimation();
-    const loopInterval = setInterval(runAnimation, every);
+    spin();
+    const loop = setInterval(spin, every);
 
     return () => {
-      clearInterval(loopInterval);
-      intervalsRef.current.forEach(clearInterval);
+      clearInterval(loop);
+      clearTimers();
     };
   }, [isInView, every, text]);
 

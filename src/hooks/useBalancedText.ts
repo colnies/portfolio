@@ -1,5 +1,16 @@
-import { useState, useEffect, useRef, useCallback } from "react";
-import { prepareWithSegments, walkLineRanges, prepare, layout } from "@chenglou/pretext";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type RefObject,
+} from "react";
+import {
+  prepareWithSegments,
+  walkLineRanges,
+  prepare,
+  layout,
+} from "@chenglou/pretext";
 import type { PreparedTextWithSegments } from "@chenglou/pretext";
 
 /**
@@ -11,7 +22,9 @@ function findOptimalWidth(
   maxWidth: number
 ): number {
   let lineCountAtMax = 0;
-  walkLineRanges(prepared, maxWidth, () => { lineCountAtMax++; });
+  walkLineRanges(prepared, maxWidth, () => {
+    lineCountAtMax++;
+  });
 
   if (lineCountAtMax <= 1) return maxWidth;
 
@@ -21,7 +34,9 @@ function findOptimalWidth(
   while (hi - lo > 1) {
     const mid = (lo + hi) / 2;
     let count = 0;
-    walkLineRanges(prepared, mid, () => { count++; });
+    walkLineRanges(prepared, mid, () => {
+      count++;
+    });
     if (count <= lineCountAtMax) {
       hi = mid;
     } else {
@@ -82,8 +97,8 @@ export function useTextFits(
  * Hook to track an element's width, debounced on resize.
  */
 export function useContainerWidth<T extends HTMLElement>(): [
-  React.RefObject<T | null>,
-  number
+  RefObject<T | null>,
+  number,
 ] {
   const ref = useRef<T | null>(null);
   const [width, setWidth] = useState(0);

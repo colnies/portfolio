@@ -1,77 +1,44 @@
 # Colin Nies Portfolio
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS.
+A single-page portfolio built with Vite, React, TypeScript, and Tailwind CSS.
 
-## Features
+## Stack
 
-- Responsive design that works on all devices
-- Dark/light theme support
-- Smooth scrolling navigation
-- Project showcase section
-- Contact information and social links
-- Built with modern tech stack:
-  - Next.js 14
-  - TypeScript
-  - Tailwind CSS
-  - shadcn/ui components
-  - Lucide icons
+- Vite + React 19
+- TypeScript
+- Tailwind CSS
+- Framer Motion for animation
+- Lucide icons
 
-## Getting Started
+## Getting started
 
-### Prerequisites
-
-- Node.js 18.17 or later
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/colnies/portfolio.git
-cd portfolio
-```
-
-2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Scripts
 
-## Project Structure
+| Script                 | What it does                       |
+| ---------------------- | ---------------------------------- |
+| `npm run dev`          | Start the dev server               |
+| `npm run build`        | Type-check and build to `dist/`    |
+| `npm run preview`      | Serve the production build locally |
+| `npm run format`       | Format the repo with Prettier      |
+| `npm run format:check` | Check formatting without writing   |
+
+## Project layout
 
 ```
-portfolio/
-├── app/
-│   ├── layout.tsx
-│   └── page.tsx
-├── components/
-│   ├── ui/
-│   │   └── [shadcn components]
-│   └── theme-toggle.tsx
-├── public/
-│   └── [images and assets]
-├── styles/
-│   └── globals.css
-└── [config files]
+src/
+  App.tsx            Page composition
+  data/              Site content (projects, companies, links)
+  components/        UI and animated sections
+  hooks/             Text measurement hooks
+  lib/               Shared helpers and motion variants
+  index.css          Fonts, theme tokens, global styles
 ```
 
-## Customization
+## Editing content
 
-1. Update the metadata in `page.tsx` with your information
-2. Replace project images in the `public` directory
-3. Modify the `projects` array in `page.tsx` with your own projects
-4. Update social links and contact information
-
-## License
-
-MIT License - feel free to use this project as a template for your own portfolio!
+Projects, companies, and social links live in `src/data/`. Update those files to change what the page shows without touching component code.
