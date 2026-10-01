@@ -1,0 +1,26 @@
+# Colin Nies
+
+> Software engineer at UKG focused on frontend development and UX. Works in the sweet spot between design and engineering, building products that look clean and feel special. Currently pursuing a Master's in Technology Management at Rutgers University.
+
+## About
+
+- Role: Software Engineer at [UKG](https://ukg.com)
+- Focus: frontend development, UX, interaction design
+- Education: Master's in Technology Management (in progress), Rutgers University
+- Stack: React, TypeScript, Next.js, Tailwind CSS, Python, FastAPI, PostgreSQL
+- Worked with: UKG, Daialog, GigFi, LendSwift, Union Square Financial, Lindy Promotions, Joonbug, Skynet Media
+
+## Projects
+
+- [Drift](https://drift-indol-two.vercel.app/): Python, FastAPI, PostgreSQL, React
+- [Sleep Detective](https://github.com/colnies/sleep-detective): Python
+- [Skybreak Events](https://skybreakevents.com): Next.js, TypeScript, Tailwind
+- [LendSwift](https://lendswift.com): Next.js, Styled Components
+- [Louie the Corgi](https://colnies.github.io/louie-the-corgi/index.html): HTML, TypeScript, CSS
+- [Lindy Promotions](https://lindypromo.com): Next.js, TypeScript, Tailwind, Firebase
+
+## Contact
+
+- Email: contact@colinnies.dev
+- [GitHub](https://github.com/colnies)
+- [LinkedIn](https://linkedin.com/in/colin-nies)

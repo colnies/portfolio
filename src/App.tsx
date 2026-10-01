@@ -15,11 +15,12 @@ export default function App() {
   return (
     <div className="min-h-screen bg-background">
       <WaveBackground />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-background" />
 
-      <Hero />
-      <FeaturedProjects />
-      <Contact />
+      <main>
+        <Hero />
+        <FeaturedProjects />
+        <Contact />
+      </main>
       <Footer />
     </div>
   );
@@ -27,54 +28,61 @@ export default function App() {
 
 function Hero() {
   return (
-    <motion.section
-      className="relative mb-12 min-h-screen px-6 pt-20 md:mb-0 md:px-4"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <section className="relative px-6 pb-16 pt-24 md:px-4 md:pb-24 md:pt-32">
       <motion.div
-        className="relative z-10 mx-auto max-w-3xl space-y-6 text-left"
+        className="relative z-10 mx-auto max-w-3xl space-y-6"
         variants={staggerChildren()}
         initial="hidden"
         animate="visible"
       >
-        <h1 className="gradient-flow bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
+        <motion.h1
+          variants={fadeInUp}
+          className="text-4xl font-bold tracking-tight md:text-5xl"
+        >
           {site.name}
-        </h1>
+        </motion.h1>
 
-        <p className="text-xl uppercase text-foreground md:text-2xl">
+        <motion.p
+          variants={fadeInUp}
+          className="text-xl uppercase text-foreground md:text-2xl"
+        >
           Software Engineer
           <br />
-          Focused on Experience Design
+          Focused on Frontend & UX
           <br />
           Building at{" "}
           <a
             href={site.employer.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-offset-4 hover:underline"
+            className="underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
           >
             <SlotMachine text={site.employer.name} every={8000} />
           </a>
-        </p>
+        </motion.p>
 
-        <p className="max-w-md font-basier text-lg text-muted-foreground">
-          Currently pursuing my Master's in{" "}
+        <motion.p
+          variants={fadeInUp}
+          className="max-w-md font-basier text-lg text-muted-foreground"
+        >
+          Currently pursuing my Master’s in{" "}
           <span className="text-foreground">Technology Management</span> at{" "}
           <span className="text-foreground">Rutgers University</span>
-        </p>
+        </motion.p>
 
-        <p className="max-w-lg font-basier text-lg text-muted-foreground">
+        <motion.p
+          variants={fadeInUp}
+          className="max-w-lg font-basier text-lg text-muted-foreground"
+        >
           I live in the{" "}
           <span className="text-foreground">
             sweet spot between design and engineering
           </span>
           , creating products that look clean and{" "}
           <span className="text-foreground">feel special</span>.
-        </p>
+        </motion.p>
 
-        <div className="flex gap-4">
+        <motion.div variants={fadeInUp} className="flex gap-4">
           {socialLinks.map(({ label, href, icon: Icon }) => (
             <a
               key={label}
@@ -87,57 +95,48 @@ function Hero() {
               </Button>
             </a>
           ))}
-        </div>
+        </motion.div>
 
-        <div>
+        <motion.div variants={fadeInUp}>
           <a href="#projects">
-            <Button className="gradient-flow mt-2">View My Work</Button>
+            <Button className="mt-2">View My Work</Button>
           </a>
-        </div>
+        </motion.div>
 
-        <ErrorBoundary>
-          <GitHubCalendar
-            username={site.githubUsername}
-            blockSize={9}
-            blockMargin={4}
-            fontSize={16}
-            colorScheme="dark"
-            theme={{ dark: CALENDAR_COLORS }}
-            throwOnError
-          />
-        </ErrorBoundary>
+        <motion.div variants={fadeInUp}>
+          <ErrorBoundary>
+            <GitHubCalendar
+              username={site.githubUsername}
+              blockSize={9}
+              blockMargin={4}
+              fontSize={16}
+              colorScheme="dark"
+              theme={{ dark: CALENDAR_COLORS }}
+              throwOnError
+            />
+          </ErrorBoundary>
+        </motion.div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }
 
 function Contact() {
   return (
-    <section className="px-6 py-20 md:px-4">
-      <motion.div
-        className="mx-auto max-w-3xl"
-        variants={staggerChildren()}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-      >
-        <motion.h2 variants={fadeInUp} className="mb-6 text-3xl font-bold">
-          Let's Work Together
-        </motion.h2>
-        <motion.p
-          variants={fadeInUp}
-          className="mb-8 font-basier text-muted-foreground"
-        >
-          I'm always interested in hearing about new projects and opportunities.
-        </motion.p>
-        <motion.div variants={fadeInUp}>
-          <a href={`mailto:${site.email}`}>
-            <Button className="hover:gradient-flow">
-              Get In Touch <Mail className="ml-2 h-4 w-4" />
-            </Button>
-          </a>
-        </motion.div>
-      </motion.div>
+    <section className="px-6 pb-24 pt-12 md:px-4">
+      <div className="mx-auto max-w-3xl">
+        <h2 className="mb-6 text-3xl font-bold tracking-tight">
+          Let’s Work Together
+        </h2>
+        <p className="mb-8 max-w-md font-basier text-muted-foreground">
+          I’m always interested in hearing about new projects and opportunities.
+        </p>
+        <a href={`mailto:${site.email}`}>
+          <Button>
+            Get In Touch <Mail className="ml-2 h-4 w-4" />
+          </Button>
+        </a>
+      </div>
     </section>
   );
 }
@@ -157,7 +156,7 @@ function Footer() {
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={label}
-              className="transition-colors hover:text-foreground"
+              className="transition-colors duration-200 ease-out hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
             >
               <Icon className="h-4 w-4" />
             </a>

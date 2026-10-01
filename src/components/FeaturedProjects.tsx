@@ -1,10 +1,8 @@
-import { motion } from "framer-motion";
 import {
   useBalancedText,
   useTextFits,
   useContainerWidth,
 } from "@/hooks/useBalancedText";
-import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { projects, type Project } from "@/data/projects";
 import { companies } from "@/data/companies";
 
@@ -25,60 +23,55 @@ function ProjectRow({ title, tags, link, containerWidth }: ProjectRowProps) {
   const balancedWidth = useBalancedText(title, TITLE_FONT, containerWidth);
 
   return (
-    <motion.div variants={fadeInUp}>
-      <a
-        href={link}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex items-baseline justify-between border-b border-border py-5 transition-all duration-300 hover:border-muted-foreground/30 hover:pl-3"
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-baseline justify-between border-b border-border py-5 transition-colors duration-200 ease-out hover:border-muted-foreground/30 focus-visible:border-foreground focus-visible:outline-none"
+      style={
+        fitsOnOneLine ? undefined : { flexDirection: "column", gap: "6px" }
+      }
+    >
+      <span
+        className="flex items-center gap-2 text-lg font-medium text-foreground/80 transition-[color,transform] duration-200 ease-out group-hover:translate-x-2 group-hover:text-foreground group-focus-visible:translate-x-2 group-focus-visible:text-foreground"
         style={
-          fitsOnOneLine ? undefined : { flexDirection: "column", gap: "6px" }
+          balancedWidth && balancedWidth < containerWidth
+            ? { maxWidth: balancedWidth }
+            : undefined
         }
       >
+        {title}
         <span
-          className="flex items-center gap-2 text-lg font-medium text-foreground/80 transition-colors duration-300 group-hover:text-foreground"
-          style={
-            balancedWidth && balancedWidth < containerWidth
-              ? { maxWidth: balancedWidth }
-              : undefined
-          }
+          aria-hidden="true"
+          className="text-sm text-muted-foreground/40 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
         >
-          {title}
-          <span className="-translate-x-2 text-sm text-muted-foreground/40 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-            →
-          </span>
+          →
         </span>
-        <span className="whitespace-nowrap text-xs text-muted-foreground/60 transition-colors duration-300 group-hover:text-muted-foreground">
-          {tagString}
-        </span>
-      </a>
-    </motion.div>
+      </span>
+      <span className="whitespace-nowrap text-xs text-muted-foreground/60 transition-colors duration-200 ease-out group-hover:text-muted-foreground group-focus-visible:text-muted-foreground">
+        {tagString}
+      </span>
+    </a>
   );
 }
 
 function WorkedWith() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-      className="mb-20"
-    >
+    <div className="mb-20">
       <h3 className="mb-8 text-base font-medium uppercase tracking-widest text-muted-foreground">
         Worked With
       </h3>
-      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
+      <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
         {companies.map((company) => (
-          <span
+          <li
             key={company}
-            className="whitespace-nowrap text-sm text-muted-foreground/60 transition-colors duration-300 hover:text-foreground"
+            className="whitespace-nowrap text-sm text-muted-foreground/60"
           >
             {company}
-          </span>
+          </li>
         ))}
-      </div>
-    </motion.div>
+      </ul>
+    </div>
   );
 }
 
@@ -86,16 +79,17 @@ export function FeaturedProjects() {
   const [containerRef, containerWidth] = useContainerWidth<HTMLDivElement>();
 
   return (
-    <section id="projects" className="px-6 py-20 md:px-4">
+    <section
+      id="projects"
+      aria-labelledby="projects-heading"
+      className="px-6 pb-24 pt-8 md:px-4"
+    >
       <div className="mx-auto max-w-3xl" ref={containerRef}>
+        <h2 id="projects-heading" className="sr-only">
+          Projects
+        </h2>
         <WorkedWith />
-
-        <motion.div
-          variants={staggerChildren(0.08)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-        >
+        <div>
           {projects.map((project) => (
             <ProjectRow
               key={project.title}
@@ -103,7 +97,7 @@ export function FeaturedProjects() {
               containerWidth={containerWidth}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

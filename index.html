@@ -4,45 +4,171 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/Favicon-32x32.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#020817" />
 
     <!-- Primary Meta Tags -->
-    <title>Colin Nies</title>
-    <meta name="title" content="Colin Nies" />
+    <title>Colin Nies — Software Engineer, Frontend & UX</title>
     <meta
       name="description"
-      content="Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences"
+      content="Colin Nies is a software engineer at UKG focused on frontend development and UX, building interfaces that look clean and feel special."
     />
+    <meta name="author" content="Colin Nies" />
+    <link rel="canonical" href="https://colinnies.dev/" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <!-- Open Graph -->
+    <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://colinnies.dev/" />
-    <meta property="og:title" content="Colin Nies" />
+    <meta
+      property="og:title"
+      content="Colin Nies — Software Engineer, Frontend & UX"
+    />
     <meta
       property="og:description"
-      content="Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences"
+      content="Software engineer at UKG focused on frontend development and UX, building interfaces that look clean and feel special."
     />
     <meta property="og:image" content="https://colinnies.dev/main-logo.png" />
-    <meta property="og:site_name" content="Colin Nies Portfolio" />
+    <meta property="og:image:alt" content="Colin Nies logo" />
+    <meta property="og:site_name" content="Colin Nies" />
     <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Colin" />
+    <meta property="profile:last_name" content="Nies" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://colinnies.dev/" />
-    <meta property="twitter:title" content="Colin Nies" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta
-      property="twitter:description"
-      content="Portfolio of Colin Nies - Web Developer and Product Designer specializing in user-centered digital experiences"
+      name="twitter:title"
+      content="Colin Nies — Software Engineer, Frontend & UX"
     />
     <meta
-      property="twitter:image"
-      content="https://colinnies.dev/main-logo.png"
+      name="twitter:description"
+      content="Software engineer at UKG focused on frontend development and UX, building interfaces that look clean and feel special."
     />
+    <meta name="twitter:image" content="https://colinnies.dev/main-logo.png" />
 
     <!-- Robots -->
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://colinnies.dev/#person",
+            "name": "Colin Nies",
+            "url": "https://colinnies.dev/",
+            "email": "mailto:contact@colinnies.dev",
+            "image": "https://colinnies.dev/main-logo.png",
+            "jobTitle": "Software Engineer",
+            "description": "Software engineer focused on frontend development and UX, working at the intersection of design and engineering.",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "UKG",
+              "url": "https://ukg.com"
+            },
+            "alumniOf": {
+              "@type": "CollegeOrUniversity",
+              "name": "Rutgers University"
+            },
+            "knowsAbout": [
+              "Frontend development",
+              "User experience (UX) design",
+              "Interaction design",
+              "Design engineering",
+              "React",
+              "TypeScript",
+              "Next.js",
+              "Tailwind CSS",
+              "Python",
+              "FastAPI"
+            ],
+            "sameAs": [
+              "https://github.com/colnies",
+              "https://linkedin.com/in/colin-nies"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://colinnies.dev/#website",
+            "url": "https://colinnies.dev/",
+            "name": "Colin Nies",
+            "publisher": { "@id": "https://colinnies.dev/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://colinnies.dev/#profile",
+            "url": "https://colinnies.dev/",
+            "name": "Colin Nies — Software Engineer, Frontend & UX",
+            "isPartOf": { "@id": "https://colinnies.dev/#website" },
+            "mainEntity": { "@id": "https://colinnies.dev/#person" },
+            "dateModified": "2026-10-01"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!--
+        Static summary for crawlers that don't run JavaScript (most AI answer
+        engines). React replaces this on mount. Keep in sync with src/data.
+      -->
+      <main class="mx-auto max-w-3xl px-6 pt-20 text-muted-foreground md:px-4">
+        <h1 class="text-4xl font-bold text-foreground md:text-5xl">
+          Colin Nies
+        </h1>
+        <p>
+          Software engineer at <a href="https://ukg.com">UKG</a>, focused on
+          frontend development and UX. I work in the sweet spot between design
+          and engineering, building products that look clean and feel special.
+          Currently pursuing a Master's in Technology Management at Rutgers
+          University.
+        </p>
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <a href="https://drift-indol-two.vercel.app/">Drift</a> — Python,
+            FastAPI, PostgreSQL, React
+          </li>
+          <li>
+            <a href="https://github.com/colnies/sleep-detective"
+              >Sleep Detective</a
+            >
+            — Python
+          </li>
+          <li>
+            <a href="https://skybreakevents.com">Skybreak Events</a> — Next.js,
+            TypeScript, Tailwind
+          </li>
+          <li>
+            <a href="https://lendswift.com">LendSwift</a> — Next.js, Styled
+            Components
+          </li>
+          <li>
+            <a href="https://colnies.github.io/louie-the-corgi/index.html"
+              >Louie the Corgi</a
+            >
+            — HTML, TypeScript, CSS
+          </li>
+          <li>
+            <a href="https://lindypromo.com">Lindy Promotions</a> — Next.js,
+            TypeScript, Tailwind, Firebase
+          </li>
+        </ul>
+        <h2>Worked with</h2>
+        <p>
+          UKG, Daialog, GigFi, LendSwift, Union Square Financial, Lindy
+          Promotions, Joonbug, Skynet Media
+        </p>
+        <h2>Contact</h2>
+        <p>
+          <a href="mailto:contact@colinnies.dev">contact@colinnies.dev</a> ·
+          <a href="https://github.com/colnies">GitHub</a> ·
+          <a href="https://linkedin.com/in/colin-nies">LinkedIn</a>
+        </p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -79,10 +79,3 @@
     font-family: "DejaVu Sans Mono", Arial, Helvetica, sans-serif;
   }
 }
-
-@layer components {
-  /* Animated teal-to-sky gradient used for the name and primary buttons */
-  .gradient-flow {
-    @apply animate-flow bg-gradient-to-r from-teal-800 via-primary to-sky-800 bg-[length:200%_auto];
-  }
-}

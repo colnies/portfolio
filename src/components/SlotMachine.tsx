@@ -1,5 +1,11 @@
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  AnimatePresence,
+} from "framer-motion";
 import { useRef, useEffect, useState } from "react";
+import { EASE_OUT } from "@/lib/motion";
 
 interface SlotMachineProps {
   text: string;
@@ -30,6 +36,7 @@ export function SlotMachine({
 }: SlotMachineProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
+  const prefersReducedMotion = useReducedMotion();
   const [slots, setSlots] = useState<Slot[]>(() =>
     text.split("").map((char, i) => ({ char, isSpinning: false, key: i }))
   );
@@ -38,7 +45,7 @@ export function SlotMachine({
   const keyCounterRef = useRef(text.length);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || prefersReducedMotion) return;
 
     const setSlot = (index: number, char: string, isSpinning: boolean) => {
       keyCounterRef.current += 1;
@@ -89,7 +96,7 @@ export function SlotMachine({
       clearInterval(loop);
       clearTimers();
     };
-  }, [isInView, every, text]);
+  }, [isInView, prefersReducedMotion, every, text]);
 
   return (
     <span ref={ref} className={className}>
@@ -101,8 +108,8 @@ export function SlotMachine({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{
-              duration: slot.isSpinning ? 0.04 : 0.25,
-              ease: slot.isSpinning ? "linear" : [0.34, 1.56, 0.64, 1],
+              duration: slot.isSpinning ? 0.04 : 0.22,
+              ease: slot.isSpinning ? "linear" : EASE_OUT,
             }}
             style={{
               display: "inline-block",
