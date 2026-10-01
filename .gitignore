@@ -24,3 +24,6 @@ yarn-error.log*
 # local tooling state
 .claude/
 .superpowers/
+
+# local notes
+/docs/

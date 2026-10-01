@@ -4,7 +4,6 @@ import {
   useContainerWidth,
 } from "@/hooks/useBalancedText";
 import { projects, type Project } from "@/data/projects";
-import { companies } from "@/data/companies";
 
 // Matches the rendered size of the project title (text-lg, font-medium)
 const TITLE_FONT = "500 18px 'DejaVu Sans Mono', monospace";
@@ -27,7 +26,7 @@ function ProjectRow({ title, tags, link, containerWidth }: ProjectRowProps) {
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-baseline justify-between border-b border-border py-5 transition-colors duration-200 ease-out hover:border-muted-foreground/30 focus-visible:border-foreground focus-visible:outline-none"
+      className="group flex items-baseline justify-between border-b border-border py-5 transition-colors duration-200 ease-out hover:border-muted-foreground/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm"
       style={
         fitsOnOneLine ? undefined : { flexDirection: "column", gap: "6px" }
       }
@@ -55,26 +54,6 @@ function ProjectRow({ title, tags, link, containerWidth }: ProjectRowProps) {
   );
 }
 
-function WorkedWith() {
-  return (
-    <div className="mb-20">
-      <h3 className="mb-8 text-base font-medium uppercase tracking-widest text-muted-foreground">
-        Worked With
-      </h3>
-      <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
-        {companies.map((company) => (
-          <li
-            key={company}
-            className="whitespace-nowrap text-sm text-muted-foreground/60"
-          >
-            {company}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 export function FeaturedProjects() {
   const [containerRef, containerWidth] = useContainerWidth<HTMLDivElement>();
 
@@ -82,13 +61,12 @@ export function FeaturedProjects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="px-6 pb-24 pt-8 md:px-4"
+      className="px-6 pb-24 pt-16 md:px-4"
     >
       <div className="mx-auto max-w-3xl" ref={containerRef}>
         <h2 id="projects-heading" className="sr-only">
           Projects
         </h2>
-        <WorkedWith />
         <div>
           {projects.map((project) => (
             <ProjectRow

@@ -4,6 +4,15 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      animation: {
+        flow: "flowGradient 10s ease-in-out infinite",
+      },
+      keyframes: {
+        flowGradient: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+      },
       transitionTimingFunction: {
         // Exponential ease-out for entering elements, ease-in for leaving
         out: "cubic-bezier(0.16, 1, 0.3, 1)",

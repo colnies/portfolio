@@ -7,7 +7,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WaveBackground } from "@/components/WaveBackground";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
-import { fadeInUp, staggerChildren } from "@/lib/motion";
+import { WorkedWith } from "@/components/WorkedWith";
+import { EASE_OUT, fadeInUp, staggerChildren } from "@/lib/motion";
 import { site, socialLinks } from "@/data/site";
 
 const CALENDAR_COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
@@ -42,7 +43,7 @@ function Hero() {
   const isClient = useIsClient();
 
   return (
-    <section className="relative px-6 pb-16 pt-24 md:px-4 md:pb-24 md:pt-32">
+    <section className="relative flex min-h-screen flex-col px-6 pt-24 md:px-4 md:pt-32">
       <motion.div
         className="relative z-10 mx-auto max-w-3xl space-y-6"
         variants={staggerChildren()}
@@ -51,7 +52,7 @@ function Hero() {
       >
         <motion.h1
           variants={fadeInUp}
-          className="text-4xl font-bold tracking-tight md:text-5xl"
+          className="bg-gradient-to-r from-teal-800 via-foreground to-sky-800 bg-[length:200%_auto] bg-clip-text text-4xl font-bold tracking-tight text-transparent motion-safe:animate-flow md:text-5xl"
         >
           {site.name}
         </motion.h1>
@@ -69,7 +70,7 @@ function Hero() {
             href={site.employer.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline-offset-4 hover:underline focus-visible:underline focus-visible:outline-none"
+            className="rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <SlotMachine text={site.employer.name} every={8000} />
           </a>
@@ -112,12 +113,6 @@ function Hero() {
         </motion.div>
 
         <motion.div variants={fadeInUp}>
-          <a href="#projects">
-            <Button className="mt-2">View My Work</Button>
-          </a>
-        </motion.div>
-
-        <motion.div variants={fadeInUp}>
           {/* Measures text with the DOM, so it can't be prerendered */}
           {isClient && (
             <ErrorBoundary>
@@ -133,6 +128,16 @@ function Hero() {
             </ErrorBoundary>
           )}
         </motion.div>
+      </motion.div>
+
+      {/* Sits beneath the wave band at the foot of the first viewport */}
+      <motion.div
+        className="relative z-10 mx-auto mt-auto w-full max-w-3xl pb-10 pt-20"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.42, ease: EASE_OUT }}
+      >
+        <WorkedWith />
       </motion.div>
     </section>
   );
@@ -174,7 +179,7 @@ function Footer() {
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={label}
-              className="transition-colors duration-200 ease-out hover:text-foreground focus-visible:text-foreground focus-visible:outline-none"
+              className="rounded-sm transition-colors duration-200 ease-out hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <Icon className="h-4 w-4" />
             </a>

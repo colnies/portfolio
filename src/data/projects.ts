@@ -6,6 +6,16 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "Hark",
+    tags: ["Python", "FastAPI", "Google Cloud", "Claude"],
+    link: "https://hark-gcp.netlify.app/",
+  },
+  {
+    title: "Alexa & Colin's Wedding",
+    tags: ["Astro", "Tailwind", "Netlify Forms"],
+    link: "https://acnieswedding.netlify.app/",
+  },
+  {
     title: "Drift",
     tags: ["Python", "FastAPI", "PostgreSQL", "React"],
     link: "https://drift-indol-two.vercel.app/",
