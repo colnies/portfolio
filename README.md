@@ -22,7 +22,7 @@ npm run dev
 | Script                 | What it does                       |
 | ---------------------- | ---------------------------------- |
 | `npm run dev`          | Start the dev server               |
-| `npm run build`        | Type-check and build to `dist/`    |
+| `npm run build`        | Type-check, build, and prerender to `dist/` |
 | `npm run preview`      | Serve the production build locally |
 | `npm run format`       | Format the repo with Prettier      |
 | `npm run format:check` | Check formatting without writing   |

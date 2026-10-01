@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from "react";
 import { motion } from "framer-motion";
 import GitHubCalendar from "react-github-calendar";
 import { Mail } from "lucide-react";
@@ -26,7 +27,20 @@ export default function App() {
   );
 }
 
+const noopSubscribe = () => () => {};
+
+/** False during prerender and hydration, true once running in the browser. */
+function useIsClient() {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false
+  );
+}
+
 function Hero() {
+  const isClient = useIsClient();
+
   return (
     <section className="relative px-6 pb-16 pt-24 md:px-4 md:pb-24 md:pt-32">
       <motion.div
@@ -104,17 +118,20 @@ function Hero() {
         </motion.div>
 
         <motion.div variants={fadeInUp}>
-          <ErrorBoundary>
-            <GitHubCalendar
-              username={site.githubUsername}
-              blockSize={9}
-              blockMargin={4}
-              fontSize={16}
-              colorScheme="dark"
-              theme={{ dark: CALENDAR_COLORS }}
-              throwOnError
-            />
-          </ErrorBoundary>
+          {/* Measures text with the DOM, so it can't be prerendered */}
+          {isClient && (
+            <ErrorBoundary>
+              <GitHubCalendar
+                username={site.githubUsername}
+                blockSize={9}
+                blockMargin={4}
+                fontSize={16}
+                colorScheme="dark"
+                theme={{ dark: CALENDAR_COLORS }}
+                throwOnError
+              />
+            </ErrorBoundary>
+          )}
         </motion.div>
       </motion.div>
     </section>
@@ -145,7 +162,8 @@ function Footer() {
   return (
     <footer className="border-t border-border px-6 py-8 md:px-4">
       <div className="mx-auto flex max-w-3xl items-center justify-between text-sm text-muted-foreground">
-        <span>
+        {/* Year is baked in at build time and may be stale until the next deploy */}
+        <span suppressHydrationWarning>
           © {new Date().getFullYear()} {site.name}
         </span>
         <div className="flex items-center gap-5">
