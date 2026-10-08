@@ -32,7 +32,7 @@ function ProjectRow({ title, tags, link, containerWidth }: ProjectRowProps) {
       }
     >
       <span
-        className="flex items-center gap-2 text-lg font-medium text-foreground/80 transition-[color,transform] duration-200 ease-out group-hover:translate-x-2 group-hover:text-foreground group-focus-visible:translate-x-2 group-focus-visible:text-foreground"
+        className="flex items-center gap-2 text-lg font-medium text-foreground/80 transition-[color,transform] duration-200 ease-out motion-safe:group-hover:translate-x-2 group-hover:text-foreground motion-safe:group-focus-visible:translate-x-2 group-focus-visible:text-foreground"
         style={
           balancedWidth && balancedWidth < containerWidth
             ? { maxWidth: balancedWidth }

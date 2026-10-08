@@ -70,14 +70,45 @@
     @apply border-border;
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+    /* No rubber-band bounce with a mouse; touch keeps pull-to-refresh */
+    overscroll-behavior-y: none;
+  }
+
+  @media (any-pointer: coarse) {
+    html {
+      overscroll-behavior-y: auto;
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
     }
   }
 
+  :is(h1, h2, h3, h4) {
+    text-wrap: balance;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "DejaVu Sans Mono", Arial, Helvetica, sans-serif;
+  }
+}
+
+@layer components {
+  /* Grows small targets to 44px without changing how they look */
+  .hit-area {
+    position: relative;
+  }
+
+  .hit-area::after {
+    content: "";
+    position: absolute;
+    inset: min(0px, (100% - 44px) / 2);
   }
 }

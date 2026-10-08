@@ -15,7 +15,7 @@ const CALENDAR_COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-svh bg-background">
       <WaveBackground />
 
       <main>
@@ -43,7 +43,7 @@ function Hero() {
   const isClient = useIsClient();
 
   return (
-    <section className="relative flex min-h-screen flex-col px-6 pt-24 md:px-4 md:pt-32">
+    <section className="relative flex min-h-svh flex-col px-6 pt-24 md:px-4 md:pt-32">
       <motion.div
         className="relative z-10 mx-auto max-w-3xl space-y-6"
         variants={staggerChildren()}
@@ -99,16 +99,16 @@ function Hero() {
 
         <motion.div variants={fadeInUp} className="flex gap-4">
           {socialLinks.map(({ label, href, icon: Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target={href.startsWith("mailto:") ? undefined : "_blank"}
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" size="icon" aria-label={label}>
+            <Button key={label} variant="outline" size="icon" asChild>
+              <a
+                href={href}
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                aria-label={label}
+              >
                 <Icon className="h-5 w-5" />
-              </Button>
-            </a>
+              </a>
+            </Button>
           ))}
         </motion.div>
 
@@ -153,11 +153,11 @@ function Contact() {
         <p className="mb-8 max-w-md font-basier text-muted-foreground">
           I’m always interested in hearing about new projects and opportunities.
         </p>
-        <a href={`mailto:${site.email}`}>
-          <Button>
+        <Button asChild>
+          <a href={`mailto:${site.email}`}>
             Get In Touch <Mail className="ml-2 h-4 w-4" />
-          </Button>
-        </a>
+          </a>
+        </Button>
       </div>
     </section>
   );
@@ -179,7 +179,7 @@ function Footer() {
               target={href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={label}
-              className="rounded-sm transition-colors duration-200 ease-out hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              className="hit-area rounded-sm transition-colors duration-200 ease-out hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               <Icon className="h-4 w-4" />
             </a>

@@ -224,8 +224,8 @@ export function WaveBackground() {
   }, []);
 
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <canvas ref={canvasRef} aria-hidden className="block h-screen w-full" />
+    <div className="pointer-events-none absolute inset-0 overflow-clip">
+      <canvas ref={canvasRef} aria-hidden className="block h-svh w-full" />
     </div>
   );
 }
