@@ -2,6 +2,10 @@ import type { Config } from "tailwindcss";
 
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  future: {
+    // Wrap hover: in (hover: hover) so taps don't leave hover stuck on touch
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       animation: {
