@@ -69,67 +69,59 @@ function Hero() {
 
   return (
     <section className="relative z-10 flex min-h-svh flex-col pt-24 md:pt-32">
-      <h1 className="mb-12 text-5xl font-bold tracking-tight text-foreground md:mb-16 md:text-7xl">
+      <h1 className="mb-8 text-5xl font-bold tracking-tight text-foreground md:mb-10 md:text-7xl">
         {site.name}
       </h1>
 
-      <div className="space-y-8">
-        <Row label="Role">
-          <p className="text-xl uppercase text-foreground md:text-2xl">
-            Software Engineer
-            <br />
-            Focused on Frontend & UX
-            <br />
-            Building at{" "}
-            <a
-              href={site.employer.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            >
-              <SlotMachine text={site.employer.name} every={8000} />
-            </a>
+      <div className="space-y-6">
+        <p className="text-xl uppercase text-foreground md:text-2xl">
+          Software Engineer
+          <br />
+          Focused on Frontend & UX
+          <br />
+          Building at{" "}
+          <a
+            href={site.employer.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          >
+            <SlotMachine text={site.employer.name} every={8000} />
+          </a>
+        </p>
+
+        <div className="max-w-lg space-y-4 font-basier text-lg text-muted-foreground">
+          <p>
+            Currently pursuing my Master’s in{" "}
+            <span className="text-foreground">Technology Management</span> at{" "}
+            <span className="text-foreground">Rutgers University</span>
           </p>
-        </Row>
+          <p>
+            I live in the{" "}
+            <span className="text-foreground">
+              sweet spot between design and engineering
+            </span>
+            , creating products that look clean and{" "}
+            <span className="text-foreground">feel special</span>.
+          </p>
+        </div>
 
-        <Row label="About">
-          <div className="max-w-lg space-y-4 font-basier text-lg text-muted-foreground">
-            <p>
-              Currently pursuing my Master’s in{" "}
-              <span className="text-foreground">Technology Management</span> at{" "}
-              <span className="text-foreground">Rutgers University</span>
-            </p>
-            <p>
-              I live in the{" "}
-              <span className="text-foreground">
-                sweet spot between design and engineering
-              </span>
-              , creating products that look clean and{" "}
-              <span className="text-foreground">feel special</span>.
-            </p>
-          </div>
-        </Row>
+        <SocialLinks />
 
-        <Row label="Elsewhere">
-          <SocialLinks />
-        </Row>
-
-        <Row label="Commits">
-          {/* Measures text with the DOM, so it can't be prerendered */}
-          {isClient && (
-            <ErrorBoundary>
-              <GitHubCalendar
-                username={site.githubUsername}
-                blockSize={9}
-                blockMargin={4}
-                fontSize={16}
-                colorScheme="dark"
-                theme={{ dark: CALENDAR_COLORS }}
-                throwOnError
-              />
-            </ErrorBoundary>
-          )}
-        </Row>
+        {/* Measures text with the DOM, so it can't be prerendered */}
+        {isClient && (
+          <ErrorBoundary>
+            <GitHubCalendar
+              username={site.githubUsername}
+              blockSize={9}
+              blockMargin={4}
+              fontSize={16}
+              colorScheme="dark"
+              theme={{ dark: CALENDAR_COLORS }}
+              throwOnError
+            />
+          </ErrorBoundary>
+        )}
       </div>
 
       {/* Sits beneath the wave band at the foot of the first viewport */}
@@ -143,7 +135,7 @@ function Hero() {
 function Contact() {
   return (
     <section aria-labelledby="contact-heading" className="pb-24 pt-12">
-      <Row label="Contact" heading id="contact-heading">
+      <Row label="Contact" id="contact-heading">
         <p className="mb-6 max-w-md font-basier text-lg text-muted-foreground">
           I’m always interested in hearing about new projects and opportunities.
         </p>

@@ -64,7 +64,7 @@ export function FeaturedProjects() {
       aria-labelledby="projects-heading"
       className="pb-24 pt-16"
     >
-      <Row label="Selected work" heading id="projects-heading">
+      <Row label="Selected work" id="projects-heading">
         <div ref={containerRef} className="border-t border-border">
           {projects.map((project) => (
             <ProjectRow
