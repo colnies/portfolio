@@ -3,7 +3,7 @@ import { Row } from "@/components/Row";
 
 export function WorkedWith() {
   return (
-    <Row label="Worked with" heading>
+    <Row label="Worked with">
       <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
         {companies.map((company) => (
           <li
