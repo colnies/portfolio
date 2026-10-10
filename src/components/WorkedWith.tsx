@@ -1,11 +1,9 @@
 import { companies } from "@/data/companies";
+import { Row } from "@/components/Row";
 
 export function WorkedWith() {
   return (
-    <div>
-      <h2 className="mb-6 text-sm font-medium uppercase tracking-widest text-muted-foreground">
-        Worked With
-      </h2>
+    <Row label="Worked with" heading>
       <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
         {companies.map((company) => (
           <li
@@ -16,6 +14,6 @@ export function WorkedWith() {
           </li>
         ))}
       </ul>
-    </div>
+    </Row>
   );
 }

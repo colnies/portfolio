@@ -4,6 +4,7 @@ import {
   useContainerWidth,
 } from "@/hooks/useBalancedText";
 import { projects, type Project } from "@/data/projects";
+import { Row } from "@/components/Row";
 
 // Matches the rendered size of the project title (text-lg, font-medium)
 const TITLE_FONT = "500 18px 'DejaVu Sans Mono', monospace";
@@ -61,13 +62,10 @@ export function FeaturedProjects() {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="px-6 pb-24 pt-16 md:px-4"
+      className="pb-24 pt-16"
     >
-      <div className="mx-auto max-w-3xl" ref={containerRef}>
-        <h2 id="projects-heading" className="sr-only">
-          Projects
-        </h2>
-        <div>
+      <Row label="Selected work" heading id="projects-heading">
+        <div ref={containerRef} className="border-t border-border">
           {projects.map((project) => (
             <ProjectRow
               key={project.title}
@@ -76,7 +74,7 @@ export function FeaturedProjects() {
             />
           ))}
         </div>
-      </div>
+      </Row>
     </section>
   );
 }
