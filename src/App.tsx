@@ -2,8 +2,8 @@ import { useSyncExternalStore } from "react";
 import GitHubCalendar from "react-github-calendar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WaveBackground } from "@/components/WaveBackground";
+import { AsciiDunes } from "@/components/dunes/AsciiDunes";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
-import { Row } from "@/components/Row";
 import { SlotMachine } from "@/components/SlotMachine";
 import { WorkedWith } from "@/components/WorkedWith";
 import { site, socialLinks } from "@/data/site";
@@ -24,8 +24,8 @@ export default function App() {
           <FeaturedProjects />
           <Contact />
         </main>
-        <Footer />
       </div>
+      <Footer />
     </div>
   );
 }
@@ -134,30 +134,35 @@ function Hero() {
 
 function Contact() {
   return (
-    <section aria-labelledby="contact-heading" className="pb-24 pt-12">
-      <Row label="Contact" id="contact-heading">
-        <p className="mb-6 max-w-md font-basier text-lg text-muted-foreground">
-          I’m always interested in hearing about new projects and opportunities.
-        </p>
-        <a
-          href={`mailto:${site.email}`}
-          className={`text-2xl text-foreground md:text-3xl ${LINK}`}
-        >
-          {site.email}
-        </a>
-      </Row>
+    <section aria-label="Contact" className="pb-24 pt-12">
+      <p className="mb-6 max-w-md font-basier text-lg text-muted-foreground">
+        I’m always interested in hearing about new projects and opportunities.
+      </p>
+      <a
+        href={`mailto:${site.email}`}
+        className={`text-2xl text-foreground md:text-3xl ${LINK}`}
+      >
+        {site.email}
+      </a>
     </section>
   );
 }
 
 function Footer() {
   return (
-    <footer className="flex flex-wrap items-center justify-between gap-4 border-t border-border py-8 text-sm text-muted-foreground">
-      {/* Year is baked in at build time and may be stale until the next deploy */}
-      <span suppressHydrationWarning>
-        © {new Date().getFullYear()} {site.name}
-      </span>
-      <SocialLinks />
+    // Full-bleed ASCII beach with the text on the sand below the dunes
+    <footer className="relative h-[clamp(300px,28vw,420px)] overflow-clip">
+      <AsciiDunes>
+        <div className="absolute inset-x-0 bottom-3 mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:px-12">
+          {/* Year is baked in at build time and may be stale until the next deploy */}
+          <span data-dune-clear suppressHydrationWarning>
+            © {new Date().getFullYear()} {site.name}
+          </span>
+          <div data-dune-clear>
+            <SocialLinks />
+          </div>
+        </div>
+      </AsciiDunes>
     </footer>
   );
 }

@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 interface Layer {
   baseline: number; // fraction of canvas height
   spacing: number;
-  radius: number;
+  fontSize: number;
   alpha: number;
   speed: number; // px/s of the primary swell
   // Primary swell travels right, a shorter chop travels left against it
@@ -30,13 +30,20 @@ interface Droplet {
 const MOBILE_BREAKPOINT = 768;
 const TAU = Math.PI * 2;
 const INTRO_SECONDS = 1.6;
-// Gerstner steepness: dots bunch up at crests and spread in troughs.
-// Combined value must stay below 1 or the surface loops over itself.
-const STEEPNESS_SWELL = 0.55;
-const STEEPNESS_CHOP = 0.2;
-const SPRAY_RATE = 4; // spawn chance per crest dot per second
+// Gerstner steepness: glyphs bunch up at crests and spread in troughs.
+// Sized with the rest spacing so crest glyphs touch but don't stack.
+const STEEPNESS_SWELL = 0.36;
+const STEEPNESS_CHOP = 0.12;
+const SPRAY_RATE = 6; // spawn chance per crest-top glyph per second
 const MAX_DROPLETS = 160;
 const GRAVITY = 70;
+const FONT_FAMILY =
+  '"DejaVu Sans Mono", ui-monospace, Menlo, Consolas, monospace';
+const SPRAY_FONT = `7px ${FONT_FAMILY}`;
+// Tinted like the footer's palette rather than the grey UI text, so the
+// glyphs read as a drawn sea instead of faded type
+const WATER = "hsl(195 45% 68%)";
+const SPRAY = "hsl(210 40% 90%)";
 
 function createLayers(isMobile: boolean): Layer[] {
   const count = isMobile ? 4 : 5;
@@ -47,15 +54,17 @@ function createLayers(isMobile: boolean): Layer[] {
     const speed = 22 + depth * 26;
     const k1 = TAU / wavelength;
     const k2 = k1 * 2.3;
+    const fontSize = 8 + depth * 5;
 
     return {
       baseline: 0.56 + depth * 0.2,
-      spacing: (isMobile ? 14 : 11) + depth * 4,
-      radius: 0.6 + depth * 0.8,
+      // Rest spacing leaves room for crests to tighten without overlapping
+      spacing: fontSize * (isMobile ? 1.15 : 1.05),
+      fontSize,
       alpha: 0.25 + depth * 0.55,
       speed,
       k1,
-      amp1: 5 + depth * 15,
+      amp1: 7 + depth * 20,
       omega1: k1 * speed,
       k2,
       amp2: 1.5 + depth * 4,
@@ -77,10 +86,6 @@ export function WaveBackground() {
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const color = `hsl(${getComputedStyle(document.documentElement)
-      .getPropertyValue("--muted-foreground")
-      .trim()})`;
-
     let width = 0;
     let height = 0;
     let isMobile = window.innerWidth < MOBILE_BREAKPOINT;
@@ -97,9 +102,12 @@ export function WaveBackground() {
       const fade = intro * intro * (3 - 2 * intro);
 
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = color;
+      ctx.fillStyle = WATER;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
 
       for (const layer of layers) {
+        ctx.font = `${layer.fontSize}px ${FONT_FAMILY}`;
         const baseY = layer.baseline * height;
         // Dots get displaced sideways, so draw past both edges
         const reach = STEEPNESS_SWELL / layer.k1 + layer.spacing;
@@ -126,30 +134,37 @@ export function WaveBackground() {
           const crest = Math.pow(Math.max(0, cos1), 6) * envelope;
           const twinkle = 0.8 + 0.2 * Math.sin(time * 1.6 + i * 2.399);
 
-          ctx.globalAlpha = layer.alpha * (0.5 + 0.5 * crest) * twinkle * fade;
-          ctx.beginPath();
-          ctx.arc(x, y, layer.radius * (1 + 0.4 * crest), 0, TAU);
-          ctx.fill();
+          // Classic ASCII sea: ~ along the crests, - down the faces, _ in
+          // the troughs, so each swell reads as ~~~--__--~~~
+          const glyph = cos1 > 0.45 ? "~" : cos1 > -0.4 ? "-" : "_";
+
+          ctx.globalAlpha =
+            layer.alpha * (0.35 + 0.65 * crest) * twinkle * fade;
+          ctx.fillText(glyph, x, y);
 
           if (
             layer.spray &&
-            cos1 > 0.985 &&
+            cos1 > 0.98 && // only the glyph at the very top of the crest
             droplets.length < MAX_DROPLETS &&
             Math.random() < SPRAY_RATE * envelope * dt
           ) {
             droplets.push({
               x,
-              y,
-              vx: layer.speed * (0.4 + Math.random() * 0.8),
-              vy: -(20 + Math.random() * 40),
+              y: y - layer.fontSize * 0.5, // leave from the top of the glyph
+              // Blown up and back off the lip, against the swell's travel,
+              // for about a second before it's gone
+              vx: -layer.speed * (0.3 + Math.random() * 0.5),
+              vy: -(25 + Math.random() * 25),
               age: 0,
-              life: 0.8 + Math.random(),
+              life: 0.8 + Math.random() * 0.4,
               radius: 0.4 + Math.random() * 0.8,
             });
           }
         }
       }
 
+      ctx.font = SPRAY_FONT;
+      ctx.fillStyle = SPRAY;
       for (let d = droplets.length - 1; d >= 0; d--) {
         const p = droplets[d];
         p.age += dt;
@@ -165,9 +180,7 @@ export function WaveBackground() {
 
         const remaining = 1 - p.age / p.life;
         ctx.globalAlpha = 0.5 * remaining * remaining * fade;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, TAU);
-        ctx.fill();
+        ctx.fillText(p.radius > 0.8 ? "'" : ".", p.x, p.y);
       }
     };
 
@@ -215,6 +228,15 @@ export function WaveBackground() {
 
     resizeObserver.observe(canvas);
     intersectionObserver.observe(canvas);
+
+    // The still frame for reduced motion may have drawn with the fallback
+    // font; redraw once the real one is in
+    if (reduceMotion && document.fonts) {
+      document.fonts
+        .load(SPRAY_FONT)
+        .then(() => render(0))
+        .catch(() => undefined);
+    }
 
     return () => {
       stop();
