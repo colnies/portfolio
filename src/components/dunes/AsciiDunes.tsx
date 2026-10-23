@@ -1,10 +1,9 @@
-import { useEffect, useRef, type ReactNode } from "react";
-import { buildScene, type Hole, type Material } from "./scene";
+import { useEffect, useRef } from "react";
+import { buildScene, type Material } from "./scene";
 
 const FONT_SIZE = 12;
 const LINE_HEIGHT = 14;
 const FPS = 6; // ASCII only needs a few frames a second; more just flickers
-const INK_INSET = 3; // px of line box above and below the overlaid text's glyphs
 const FONT = `${FONT_SIZE}px "DejaVu Sans Mono", ui-monospace, Menlo, Consolas, monospace`;
 
 const COLORS: Record<Material, string> = {
@@ -17,13 +16,11 @@ const COLORS: Record<Material, string> = {
 
 /**
  * Fills its parent with a procedurally drawn ASCII beach. The grid is
- * bottom-aligned so the sand always meets the page edge and any spare
- * height becomes sky. Children are laid over the scene, and any of them
- * marked `data-dune-clear` get the characters behind them knocked out.
+ * bottom-aligned so the sand always meets the bottom edge and any spare
+ * height becomes sky.
  */
-export function AsciiDunes({ children }: { children?: ReactNode }) {
+export function AsciiDunes() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -45,34 +42,9 @@ export function AsciiDunes({ children }: { children?: ReactNode }) {
     let frame = 0;
     let last = 0;
     let lastDraw = 0;
-    let holes: Hole[] = [];
 
     const gridLeft = () => (width - cols * charWidth) / 2;
     const gridTop = () => height - rows * LINE_HEIGHT;
-
-    const measureHoles = () => {
-      const overlay = overlayRef.current;
-      if (!overlay || !charWidth) return;
-      const base = canvas.getBoundingClientRect();
-      const left = base.left + gridLeft();
-      const top = base.top + gridTop();
-
-      holes = Array.from(
-        overlay.querySelectorAll<HTMLElement>("[data-dune-clear]")
-      ).map((el) => {
-        const r = el.getBoundingClientRect();
-        // The line box is taller than the glyphs, so trim to the ink and
-        // snap to the nearest row edges; a single line clears one row
-        const r0 = Math.round((r.top + INK_INSET - top) / LINE_HEIGHT);
-        const r1 = Math.round((r.bottom - INK_INSET - top) / LINE_HEIGHT) - 1;
-        return {
-          c0: Math.floor((r.left - left) / charWidth),
-          c1: Math.ceil((r.right - left) / charWidth) - 1,
-          r0,
-          r1: Math.max(r0, r1),
-        };
-      });
-    };
 
     const render = () => {
       if (!ready || !cols || !rows) return;
@@ -81,7 +53,7 @@ export function AsciiDunes({ children }: { children?: ReactNode }) {
       ctx.font = FONT;
       ctx.textBaseline = "top";
 
-      const cells = buildScene(cols, rows, time, holes);
+      const cells = buildScene(cols, rows, time);
       const left = gridLeft();
       const top = gridTop() + (LINE_HEIGHT - FONT_SIZE) / 2;
 
@@ -110,7 +82,6 @@ export function AsciiDunes({ children }: { children?: ReactNode }) {
       charWidth = ctx.measureText("M").width;
       cols = Math.floor(width / charWidth);
       rows = Math.floor(height / LINE_HEIGHT);
-      measureHoles();
       render();
     };
 
@@ -167,15 +138,10 @@ export function AsciiDunes({ children }: { children?: ReactNode }) {
   }, []);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        aria-hidden
-        className="pointer-events-none absolute inset-0 block h-full w-full"
-      />
-      <div ref={overlayRef} className="absolute inset-0">
-        {children}
-      </div>
-    </>
+    <canvas
+      ref={canvasRef}
+      aria-hidden
+      className="pointer-events-none absolute inset-0 block h-full w-full"
+    />
   );
 }
