@@ -97,11 +97,8 @@ function Hero() {
             <span className="text-foreground">Rutgers University</span>
           </p>
           <p>
-            I live in the{" "}
-            <span className="text-foreground">
-              sweet spot between design and engineering
-            </span>
-            , creating products that look clean and{" "}
+            I <span className="text-foreground">design and build</span> products
+            that look clean and{" "}
             <span className="text-foreground">feel special</span>.
           </p>
         </div>
