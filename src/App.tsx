@@ -150,19 +150,18 @@ function Contact() {
 
 function Footer() {
   return (
-    // Full-bleed ASCII beach with the text on the sand below the dunes
-    <footer className="relative h-[clamp(300px,28vw,420px)] overflow-clip">
-      <AsciiDunes>
-        <div className="absolute inset-x-0 bottom-3 mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 text-sm text-muted-foreground md:px-12">
-          {/* Year is baked in at build time and may be stale until the next deploy */}
-          <span data-dune-clear suppressHydrationWarning>
-            © {new Date().getFullYear()} {site.name}
-          </span>
-          <div data-dune-clear>
-            <SocialLinks />
-          </div>
-        </div>
-      </AsciiDunes>
+    <footer>
+      {/* Full-bleed ASCII beach, with the credits on solid ground below it */}
+      <div className="relative h-[clamp(300px,28vw,420px)] overflow-clip">
+        <AsciiDunes />
+      </div>
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm text-muted-foreground md:px-12">
+        {/* Year is baked in at build time and may be stale until the next deploy */}
+        <span suppressHydrationWarning>
+          © {new Date().getFullYear()} {site.name}
+        </span>
+        <SocialLinks />
+      </div>
     </footer>
   );
 }
