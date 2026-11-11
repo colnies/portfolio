@@ -1,4 +1,6 @@
-// Procedural ASCII beach, lit like a real one. The dune faces and the flat
+// Procedural ASCII beach, lit like a real one, seen from just offshore: sky
+// and dunes at the top, the beach running down to the waterline, then the
+// sea out to the viewer. The dune faces and the flat
 // sand are 3D surfaces shaded by one low sun out over the sea, with hummocks
 // and wind ripples bumping their normals, and brightness rendered as block
 // shades. Skylines are filled in eighths of a row so silhouettes are smooth
@@ -8,7 +10,8 @@
 // any width; texture is sized in cells so the grain stays the same at every
 // width.
 
-export type Material = "cloud" | "grass" | "sand" | "wet" | "wrack";
+export type Material =
+  "cloud" | "grass" | "sand" | "wet" | "wrack" | "sea" | "foam";
 
 export interface Cell {
   ch: string;
@@ -34,6 +37,10 @@ const CELL_ASPECT = 2; // a cell is about twice as tall as it is wide
 const RIPPLE_LENGTH = 0.12;
 const RIPPLE_HEIGHT = 0.003;
 const SWALE = 0.15;
+const SEA_SHARE = 0.36; // fraction of the scene height given to the sea
+const SWELLS = 3.2; // crests between the shoreline and the near edge
+const SWELL_RATE = 0.14; // crests reaching the shore per second
+const SWASH_REACH = 2.6; // rows of sand the furthest wash runs up
 
 /** Dune skyline as [x, y] fractions, y growing downward. */
 const SKYLINE: [number, number][] = [
@@ -192,7 +199,197 @@ function grassDensity(u: number): number {
   return patch > 0.55 ? 0.4 * patch : 0;
 }
 
+/**
+ * One cell of sky: cloud, or null where it's clear. Domain-warped noise is
+ * thresholded into cloud, and each cell is lit by comparing its density with
+ * a sample taken toward the sun, so tops glow and bellies sink. `fade` thins
+ * the cloud toward an edge, from 1 for full cover down to 0 for none.
+ */
+function cloudCell(
+  col: number,
+  row: number,
+  t: number,
+  fade: number
+): Cell | null {
+  if (fade <= 0) return null;
+  const px = (col - WIND * CLOUD_DRIFT * t) / 24;
+  const py = row / 4;
+  const wx = px + 0.8 * fbm(px * 0.5, py * 0.5, 20, 3);
+  const wy = py + 0.4 * fbm(px * 0.5 + 3.7, py * 0.5, 21, 3);
+  const n = fbm(wx, wy, 22) * (0.85 + 0.15 * fade);
+  const density = clamp01((n - CLOUD_COVER) / 0.17) * fade;
+  if (density <= 0) return null;
+
+  const toSun = fbm(wx + 0.12, wy - 0.25, 22);
+  const lit = clamp01(0.5 + (n - toSun) * 6);
+  const level = density * 3.4 + (dither(col, row) - 0.5) * 0.9;
+  if (level < 0.5) return null;
+  return {
+    ch: SHADES[Math.min(3, Math.floor(level - 0.5))],
+    material: "cloud",
+    alpha: 0.35 + 0.3 * lit,
+  };
+}
+
+// Columns into the cloud field where both skies start. The page always
+// opens on the same weather, and this stretch has cloud over the top strip at
+// phone, tablet and desktop widths alike; starting at 0 leaves a phone
+// looking at clear sky.
+const SKY_START = 5632;
+// Rows over which the sky dissolves into the page, at the foot of the top
+// strip and again at the head of the footer scene
+const SKY_DISSOLVE = 4;
+
+/**
+ * The top of the page: the rows of sky directly above the footer scene's, so
+ * the two are one cloud field with the page in between. It dissolves into the
+ * page at its bottom edge, and the footer's sky re-forms the same way.
+ */
+export function buildSky(cols: number, rows: number, t: number): Scene {
+  const cells: Scene = new Array(cols * rows).fill(null);
+  for (let col = 0; col < cols; col++) {
+    for (let row = 0; row < rows; row++) {
+      const fade = smoothstep(-1, SKY_DISSOLVE - 1, rows - row - 1);
+      cells[row * cols + col] = cloudCell(col + SKY_START, row - rows, t, fade);
+    }
+  }
+  return cells;
+}
+
+/**
+ * Phase of the swell at a point: whole numbers are crests, and the fraction
+ * runs from a crest back out to sea toward the next one. `w` is 0 at the
+ * shoreline and 1 at the near edge. Crests travel toward the shore and bend
+ * as they cross the uneven bottom, so no two reach the sand in a straight line.
+ */
+function swell(col: number, w: number, t: number): number {
+  const x = (col * (1.5 - 0.8 * w)) / 30;
+  const bend = 1.1 * (fbm(x * 0.6, w * 2, 110, 3) - 0.5);
+  return SWELLS * w + SWELL_RATE * t + bend;
+}
+
+/**
+ * The sea, seen from just offshore looking back at the beach: row 0 is the
+ * shoreline and the last row is the water nearest the viewer. Rows bunch up
+ * toward the shore the way distance does, so crests arrive close together and
+ * open out as they come nearer. The viewer is behind the waves, so each one
+ * shows its long sunlit back up to a crisp crest line, with the hidden front
+ * face reading as the dark trough beyond. In the shallows the stronger
+ * sections break and leave foam trailing behind them.
+ */
+function buildSea(cols: number, rows: number, t: number): Scene {
+  const cells: Scene = new Array(cols * rows).fill(null);
+
+  for (let row = 0; row < rows; row++) {
+    const d = (row + 0.5) / rows;
+    const w = Math.log(1 + 5 * d) / Math.log(6);
+    const shallow = 1 - smoothstep(0.08, 0.5, w);
+
+    for (let col = 0; col < cols; col++) {
+      const x = (col * (1.5 - 0.8 * w)) / 30;
+      const phase = swell(col, w, t);
+      const id = Math.floor(phase);
+      const f = phase - id;
+
+      // Each wave has stronger and weaker sections along its length
+      const strength =
+        0.45 + 0.55 * smoothstep(0.3, 0.7, fbm(x * 0.5, id * 3.1, 112, 2));
+      const back = Math.pow(1 - smoothstep(0, 0.6, f), 1.6);
+      const glint = 0.8 + 0.35 * ((col + 0.5) / cols); // toward the low sun
+
+      const lace = fbm(x * 6 + id * 5.3, row * 0.9 + t * 0.15, 113, 2);
+      const foam =
+        clamp01(shallow * strength * 1.4 - 0.3) *
+        (1 - smoothstep(0.05, 0.6, f)) *
+        clamp01(0.5 + 6 * (lace - 0.5));
+      if (foam > 0.3) {
+        const level = foam * 3.4 + (dither(col, row) - 0.5) * 0.9;
+        cells[row * cols + col] = {
+          ch: SHADES[Math.max(0, Math.min(3, Math.floor(level - 0.5)))],
+          material: "foam",
+          alpha: 0.22 + 0.3 * clamp01(foam),
+        };
+        continue;
+      }
+
+      const crest = 1 - smoothstep(0, 0.1, f);
+      const lum = clamp01(
+        0.08 +
+          0.07 * d +
+          (0.5 * back + 0.3 * crest) * strength * glint +
+          0.05 * (hash(col, row, 114) - 0.5)
+      );
+      const level = lum * 3.4 + (dither(col, row) - 0.5) * 0.9;
+      if (level < 0.5) continue;
+      cells[row * cols + col] = {
+        ch: SHADES[Math.min(3, Math.floor(level - 0.5))],
+        material: "sea",
+        alpha: 0.1 + 0.5 * lum,
+      };
+    }
+  }
+  return cells;
+}
+
+/**
+ * Runs the wash up the bottom rows of the beach. Each crest that lands sends
+ * a thin sheet of water up the sand in lobes, fast on the way up and slow to
+ * drain, edged with foam; the sand it has just left stays dark and wet. This
+ * is what joins the two halves: the waterline is a moving scalloped edge, not
+ * a row boundary.
+ */
+function washShore(cells: Scene, cols: number, rows: number, t: number) {
+  for (let col = 0; col < cols; col++) {
+    const phase = swell(col, 0, t);
+    const id = Math.floor(phase);
+    const f = phase - id;
+    const surge =
+      f < 0.2 ? smoothstep(0, 0.2, f) : 1 - smoothstep(0.2, 0.95, f);
+    const lobe = 0.3 + 0.7 * noise(col / 16, id * 2.3, 115);
+    const reach = 0.15 + (SWASH_REACH - 0.15) * surge * lobe;
+    const wet = 0.9 + (SWASH_REACH - 0.15) * lobe;
+
+    for (let k = 0; k <= SWASH_REACH + 1; k++) {
+      const row = rows - 1 - k;
+      if (row < 0) break;
+      const i = row * cols + col;
+
+      if (k + 1 <= reach) {
+        // Under the sheet: thin water, foamy toward its leading edge
+        const edge = clamp01(1 - (reach - k - 1));
+        const frothy = hash(col, row, 116 + (id & 7)) < 0.1 + 0.4 * edge;
+        cells[i] = {
+          ch: SHADES[frothy ? 1 : 0],
+          material: frothy ? "foam" : "sea",
+          alpha: frothy ? 0.25 + 0.15 * edge : 0.3,
+        };
+      } else if (k < reach) {
+        // The leading edge, filled from below in eighths so it creeps
+        const cover = Math.round((reach - k) * 8);
+        if (cover > 0) {
+          cells[i] = { ch: EIGHTHS[cover - 1], material: "foam", alpha: 0.34 };
+        }
+      } else if (k < wet) {
+        const cell = cells[i];
+        if (cell && (cell.material === "sand" || cell.material === "wet")) {
+          cell.material = "wet";
+          cell.alpha *= 0.6;
+        }
+      }
+    }
+  }
+}
+
+/** The whole footer scene: sky, dunes and beach above, the sea below. */
 export function buildScene(cols: number, rows: number, t: number): Scene {
+  const seaRows = Math.round(rows * SEA_SHARE);
+  const landRows = rows - seaRows;
+  const cells = buildLand(cols, landRows, t);
+  washShore(cells, cols, landRows, t);
+  return cells.concat(buildSea(cols, seaRows, t));
+}
+
+function buildLand(cols: number, rows: number, t: number): Scene {
   const cells: Scene = new Array(cols * rows).fill(null);
   const beachY = BEACH_LINE * rows; // fractional row
   const beachRow = Math.floor(beachY);
@@ -234,33 +431,16 @@ export function buildScene(cols: number, rows: number, t: number): Scene {
   };
   const hasFace = (col: number) => beachY - crest[col] > 0.8;
 
-  // Sky: domain-warped noise thresholded into cloud, each cell lit by
-  // comparing its density with a sample taken toward the sun, so tops glow
-  // and bellies sink. Clouds thin out just above the crests to keep the
+  // Sky, continuing the strip at the top of the page: it re-forms out of the
+  // page over its first rows, and thins out just above the crests to keep the
   // skyline clear.
   for (let col = 0; col < cols; col++) {
-    const px = (col - WIND * CLOUD_DRIFT * t) / 24;
     for (let row = 0; row < Math.floor(crest[col]); row++) {
-      const fade = smoothstep(1, 4, crest[col] - row - 1);
-      if (fade <= 0) continue;
-      const py = row / 4;
-      const wx = px + 0.8 * fbm(px * 0.5, py * 0.5, 20, 3);
-      const wy = py + 0.4 * fbm(px * 0.5 + 3.7, py * 0.5, 21, 3);
-      const n = fbm(wx, wy, 22) * (0.85 + 0.15 * fade);
-      const density = clamp01((n - CLOUD_COVER) / 0.17) * fade;
-      if (density <= 0) continue;
-
-      const toSun = fbm(wx + 0.12, wy - 0.25, 22);
-      const lit = clamp01(0.5 + (n - toSun) * 6);
-      const level = density * 3.4 + (dither(col, row) - 0.5) * 0.9;
-      if (level < 0.5) continue;
-      set(
-        col,
-        row,
-        SHADES[Math.min(3, Math.floor(level - 0.5))],
-        "cloud",
-        0.35 + 0.3 * lit
-      );
+      const fade =
+        smoothstep(1, 4, crest[col] - row - 1) *
+        smoothstep(-1, SKY_DISSOLVE - 1, row);
+      const cell = cloudCell(col + SKY_START, row, t, fade);
+      if (cell) cells[row * cols + col] = cell;
     }
   }
 
@@ -479,9 +659,9 @@ export function buildScene(cols: number, rows: number, t: number): Scene {
   // Clumps on the flat sand come from jittered grids: grass gathers on the
   // landward side where it can take hold, wrack toward the sea, and nearer
   // clumps are drawn bigger. Narrow grids keep them small so they don't
-  // merge into a hedge, and all stay a row clear of the bottom edge.
+  // merge into a hedge, and all stay up the beach, clear of the wash.
   const sparse = cols < 90;
-  const lowestRow = rows - 2;
+  const lowestRow = rows - 2 - Math.ceil(SWASH_REACH);
 
   for (let gy = beachRow + 2; gy <= lowestRow; gy += 3) {
     for (let gx = 0; gx < cols; gx += 10) {

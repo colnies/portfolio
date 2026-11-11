@@ -1,5 +1,5 @@
-import { WaveBackground } from "@/components/WaveBackground";
 import { AsciiDunes } from "@/components/dunes/AsciiDunes";
+import { buildSky } from "@/components/dunes/scene";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
 import { WorkedWith } from "@/components/WorkedWith";
@@ -8,7 +8,11 @@ import { site, socialLinks } from "@/data/site";
 export default function App() {
   return (
     <div className="min-h-svh bg-background">
-      <WaveBackground />
+      {/* The sky of the footer's beach, so the page runs from clouds at the
+          top down to the sand and surf at the bottom */}
+      <div className="relative h-[clamp(140px,14vw,200px)] overflow-clip">
+        <AsciiDunes build={buildSky} />
+      </div>
 
       <div className="mx-auto max-w-6xl px-6 md:px-12">
         <main>
@@ -47,7 +51,7 @@ function SocialLinks({ className = "" }: { className?: string }) {
 
 function Hero() {
   return (
-    <section className="relative z-10 flex min-h-svh flex-col pt-24 md:pt-32">
+    <section className="pt-10 md:pt-12">
       <h1 className="mb-6 text-2xl font-bold tracking-tight text-foreground md:mb-8 md:text-3xl">
         {site.name}
       </h1>
@@ -91,8 +95,7 @@ function Hero() {
         <SocialLinks />
       </div>
 
-      {/* Sits beneath the wave band at the foot of the first viewport */}
-      <div className="mt-auto pb-10 pt-20">
+      <div className="pb-10 pt-24">
         <WorkedWith />
       </div>
     </section>
@@ -115,8 +118,9 @@ function Contact() {
 function Footer() {
   return (
     <footer>
-      {/* Full-bleed ASCII beach, with the credits on solid ground below it */}
-      <div className="relative h-[clamp(300px,28vw,420px)] overflow-clip">
+      {/* One full-bleed ASCII scene: sky and dunes, the beach running down
+          to the waterline, then the sea. Credits sit below. */}
+      <div className="relative h-[clamp(460px,44vw,660px)] overflow-clip">
         <AsciiDunes />
       </div>
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-6 text-sm text-muted-foreground md:px-12">

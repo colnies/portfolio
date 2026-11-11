@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { buildScene, type Material } from "./scene";
+import { buildScene, type Material, type Scene } from "./scene";
 
 const FONT_SIZE = 12;
 const LINE_HEIGHT = 14;
@@ -12,14 +12,21 @@ const COLORS: Record<Material, string> = {
   sand: "#FAE8B4",
   wet: "hsl(300 12% 62%)",
   wrack: "hsl(25 25% 50%)",
+  sea: "hsl(198 42% 55%)",
+  foam: "hsl(200 30% 92%)",
 };
+
+interface AsciiDunesProps {
+  /** What to draw; the full beach unless told otherwise */
+  build?: (cols: number, rows: number, time: number) => Scene;
+}
 
 /**
  * Fills its parent with a procedurally drawn ASCII beach. The grid is
- * bottom-aligned so the sand always meets the bottom edge and any spare
+ * bottom-aligned so the scene always meets the bottom edge and any spare
  * height becomes sky.
  */
-export function AsciiDunes() {
+export function AsciiDunes({ build = buildScene }: AsciiDunesProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -53,7 +60,7 @@ export function AsciiDunes() {
       ctx.font = FONT;
       ctx.textBaseline = "top";
 
-      const cells = buildScene(cols, rows, time);
+      const cells = build(cols, rows, time);
       const left = gridLeft();
       const top = gridTop() + (LINE_HEIGHT - FONT_SIZE) / 2;
 
@@ -135,7 +142,7 @@ export function AsciiDunes() {
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };
-  }, []);
+  }, [build]);
 
   return (
     <canvas
