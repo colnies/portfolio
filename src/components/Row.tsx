@@ -6,13 +6,13 @@ interface RowProps {
   id?: string;
 }
 
-/** Section heading in a narrow left column, content beside it; stacks on mobile. */
+/** Section heading stacked above its content. */
 export function Row({ label, children, id }: RowProps) {
   return (
-    <div className="grid gap-3 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10">
+    <div className="space-y-3">
       <h2
         id={id}
-        className="text-xs uppercase tracking-widest text-muted-foreground md:pt-1.5"
+        className="text-xs uppercase tracking-widest text-muted-foreground"
       >
         {label}
       </h2>

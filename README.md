@@ -34,7 +34,6 @@ src/
   App.tsx            Page composition
   data/              Site content (projects, companies, links)
   components/        UI and animated sections
-  hooks/             Text measurement hooks
   lib/               Shared helpers and motion variants
   index.css          Fonts, theme tokens, global styles
 ```
