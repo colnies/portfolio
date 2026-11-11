@@ -39,7 +39,7 @@ const RIPPLE_HEIGHT = 0.003;
 const SWALE = 0.15;
 const SEA_SHARE = 0.36; // fraction of the scene height given to the sea
 const SWELLS = 3.2; // crests between the shoreline and the near edge
-const SWELL_RATE = 0.14; // crests reaching the shore per second
+const SWELL_RATE = 0.1; // crests reaching the shore per second
 const SWASH_REACH = 2.6; // rows of sand the furthest wash runs up
 
 /** Dune skyline as [x, y] fractions, y growing downward. */
