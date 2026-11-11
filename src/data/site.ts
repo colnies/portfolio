@@ -1,7 +1,6 @@
 export const site = {
   name: "Colin Nies",
   email: "contact@colinnies.dev",
-  githubUsername: "colnies",
   employer: { name: "UKG", url: "https://ukg.com" },
 };
 

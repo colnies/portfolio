@@ -3,13 +3,10 @@ import { Row } from "@/components/Row";
 
 export function WorkedWith() {
   return (
-    <Row label="Worked with">
+    <Row label="Worked at">
       <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-3">
         {companies.map((company) => (
-          <li
-            key={company}
-            className="whitespace-nowrap text-sm text-muted-foreground/60"
-          >
+          <li key={company} className="whitespace-nowrap text-muted-foreground">
             {company}
           </li>
         ))}

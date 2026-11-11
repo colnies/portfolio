@@ -1,10 +1,1 @@
-export const companies = [
-  "UKG",
-  "Daialog",
-  "GigFi",
-  "LendSwift",
-  "Union Square Financial",
-  "Lindy Promotions",
-  "Joonbug",
-  "Skynet Media",
-];
+export const companies = ["UKG", "Skynet Media", "LendSwift", "WellSky"];

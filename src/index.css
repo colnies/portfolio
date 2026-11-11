@@ -35,35 +35,18 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Basier Circle";
-  src: url("/fonts/BasierCircle-Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* Theme tokens (dark only) */
 @layer base {
   :root {
     color-scheme: dark;
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
+    --muted-foreground: 0 0% 62%;
+    --border: 0 0% 15%;
+    --ring: 0 0% 83%;
+    /* The one accent, for links only: the hero sea's blue, more saturated */
+    --accent: 200 80% 70%;
     --radius: 0.5rem;
-    --font-basier: "Basier Circle", sans-serif;
   }
 
   * {
@@ -95,12 +78,16 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-sm text-foreground antialiased md:text-base;
     font-family: "DejaVu Sans Mono", Arial, Helvetica, sans-serif;
   }
 }
 
 @layer components {
+  .link {
+    @apply rounded-sm text-accent underline decoration-accent/40 underline-offset-4 transition-colors duration-200 ease-out hover:decoration-accent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring;
+  }
+
   /* Grows small targets to 44px without changing how they look */
   .hit-area {
     position: relative;

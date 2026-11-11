@@ -1,77 +1,86 @@
-import {
-  useBalancedText,
-  useTextFits,
-  useContainerWidth,
-} from "@/hooks/useBalancedText";
 import { projects, type Project } from "@/data/projects";
 import { Row } from "@/components/Row";
 
-// Matches the rendered size of the project title (text-lg, font-medium)
-const TITLE_FONT = "500 18px 'DejaVu Sans Mono', monospace";
-
-interface ProjectRowProps extends Project {
-  containerWidth: number;
+/** "https://www.example.com/index.html" becomes "example.com" */
+function displayUrl(link: string) {
+  return link
+    .replace(/^https?:\/\/(www\.)?/, "")
+    .replace(/\/(index\.html)?$/, "");
 }
 
-function ProjectRow({ title, tags, link, containerWidth }: ProjectRowProps) {
-  const tagString = tags.join(" · ");
-  const fitsOnOneLine = useTextFits(
-    `${title}    ${tagString}`,
-    TITLE_FONT,
-    containerWidth
-  );
-  const balancedWidth = useBalancedText(title, TITLE_FONT, containerWidth);
+/** Swaps in non-breaking hyphens, so a line never ends on "z-" with "score" below */
+function keepHyphenated(text: string) {
+  return text.replace(/(\w)-(?=\w)/g, "$1\u2011");
+}
 
+/** A native disclosure, so rows open without JavaScript and find-in-page works */
+function ProjectRow({ title, blurb, details, tags, link }: Project) {
   return (
-    <a
-      href={link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex items-baseline justify-between border-b border-border py-5 transition-colors duration-200 ease-out hover:border-muted-foreground/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-sm"
-      style={
-        fitsOnOneLine ? undefined : { flexDirection: "column", gap: "6px" }
-      }
-    >
-      <span
-        className="flex items-center gap-2 text-lg font-medium text-foreground/80 transition-[color,transform] duration-200 ease-out motion-safe:group-hover:translate-x-2 group-hover:text-foreground motion-safe:group-focus-visible:translate-x-2 group-focus-visible:text-foreground"
-        style={
-          balancedWidth && balancedWidth < containerWidth
-            ? { maxWidth: balancedWidth }
-            : undefined
-        }
-      >
-        {title}
+    <details className="group border-b border-border">
+      <summary className="group/row flex cursor-pointer list-none items-baseline gap-x-[1ch] rounded-sm py-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+        <span aria-hidden="true" className="text-muted-foreground">
+          –
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="font-bold text-foreground">{title}</span>{" "}
+          <span className="text-muted-foreground transition-colors duration-200 ease-out group-hover/row:text-foreground">
+            {blurb}
+          </span>
+        </span>
         <span
           aria-hidden="true"
-          className="text-sm text-muted-foreground/40 opacity-0 transition-opacity duration-200 ease-out group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="text-muted-foreground group-open:text-accent"
         >
-          →
+          <span className="group-open:hidden">[+]</span>
+          <span className="hidden group-open:inline">[−]</span>
         </span>
-      </span>
-      <span className="whitespace-nowrap text-xs text-muted-foreground/60 transition-colors duration-200 ease-out group-hover:text-muted-foreground group-focus-visible:text-muted-foreground">
-        {tagString}
-      </span>
-    </a>
+      </summary>
+
+      <div className="space-y-3 pb-5 pl-[2ch] sm:pr-[4ch]">
+        {details.length > 0 && (
+          <ul className="max-w-[72ch] space-y-1">
+            {details.map((detail) => (
+              <li key={detail} className="flex gap-x-[1ch]">
+                <span aria-hidden="true" className="text-muted-foreground">
+                  ·
+                </span>
+                <span>{keepHyphenated(detail)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {/* Non-breaking spaces keep a two-word tag on one line, a separator
+            from starting a wrapped line, and the arrow below from wrapping alone */}
+        <p className="lowercase text-muted-foreground">
+          {tags.map((tag) => tag.replace(/ /g, "\u00a0")).join("\u00a0· ")}
+        </p>
+        <p>
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hit-area link"
+          >
+            {displayUrl(link)}
+            <span aria-hidden="true">{"\u00a0"}↗</span>
+          </a>
+        </p>
+      </div>
+    </details>
   );
 }
 
 export function FeaturedProjects() {
-  const [containerRef, containerWidth] = useContainerWidth<HTMLDivElement>();
-
   return (
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="pb-24 pt-16"
+      className="pb-24 pt-14"
     >
-      <Row label="Selected work" id="projects-heading">
-        <div ref={containerRef} className="border-t border-border">
+      <Row label="Projects" id="projects-heading">
+        <div className="border-t border-border">
           {projects.map((project) => (
-            <ProjectRow
-              key={project.title}
-              {...project}
-              containerWidth={containerWidth}
-            />
+            <ProjectRow key={project.title} {...project} />
           ))}
         </div>
       </Row>

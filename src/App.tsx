@@ -1,17 +1,9 @@
-import { useSyncExternalStore } from "react";
-import GitHubCalendar from "react-github-calendar";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WaveBackground } from "@/components/WaveBackground";
 import { AsciiDunes } from "@/components/dunes/AsciiDunes";
 import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { SlotMachine } from "@/components/SlotMachine";
 import { WorkedWith } from "@/components/WorkedWith";
 import { site, socialLinks } from "@/data/site";
-
-const CALENDAR_COLORS = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"];
-
-const LINK =
-  "rounded-sm underline decoration-muted-foreground/40 underline-offset-4 transition-colors duration-200 ease-out hover:decoration-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring";
 
 export default function App() {
   return (
@@ -30,17 +22,6 @@ export default function App() {
   );
 }
 
-const noopSubscribe = () => () => {};
-
-/** False during prerender and hydration, true once running in the browser. */
-function useIsClient() {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => true,
-    () => false
-  );
-}
-
 function SocialLinks({ className = "" }: { className?: string }) {
   return (
     <ul className={`flex flex-wrap gap-x-6 gap-y-2 ${className}`}>
@@ -52,7 +33,7 @@ function SocialLinks({ className = "" }: { className?: string }) {
               href={href}
               target={external ? "_blank" : undefined}
               rel={external ? "noopener noreferrer" : undefined}
-              className={`hit-area ${LINK}`}
+              className="hit-area link"
             >
               {label}
               {external && <span aria-hidden="true"> ↗</span>}
@@ -65,60 +46,49 @@ function SocialLinks({ className = "" }: { className?: string }) {
 }
 
 function Hero() {
-  const isClient = useIsClient();
-
   return (
     <section className="relative z-10 flex min-h-svh flex-col pt-24 md:pt-32">
-      <h1 className="mb-8 text-5xl font-bold tracking-tight text-foreground md:mb-10 md:text-7xl">
+      <h1 className="mb-6 text-2xl font-bold tracking-tight text-foreground md:mb-8 md:text-3xl">
         {site.name}
       </h1>
 
       <div className="space-y-6">
-        <p className="text-xl uppercase text-foreground md:text-2xl">
-          Software Engineer
-          <br />
-          Focused on Frontend & UX
-          <br />
-          Building at{" "}
-          <a
-            href={site.employer.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          >
-            <SlotMachine text={site.employer.name} every={8000} />
-          </a>
-        </p>
-
-        <div className="max-w-lg space-y-4 font-basier text-lg text-muted-foreground">
+        <div className="max-w-[80ch] space-y-3 text-balance text-muted-foreground md:space-y-2">
           <p>
-            Currently pursuing my Master’s in{" "}
-            <span className="text-foreground">Technology Management</span> at{" "}
-            <span className="text-foreground">Rutgers University</span>
+            <span className="text-foreground">Full-stack engineer</span> at{" "}
+            {/* The letters are inline-blocks, so without this the line can
+                break inside the name */}
+            <span className="whitespace-nowrap">
+              <a
+                href={site.employer.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-sm text-accent underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              >
+                <SlotMachine text={site.employer.name} every={8000} />
+              </a>
+            </span>{" "}
+            with a soft spot for <span className="text-foreground">design</span>
+            .
           </p>
           <p>
-            I <span className="text-foreground">design and build</span> products
-            that look clean and{" "}
+            Currently pursuing my Master’s in{" "}
+            <span className="whitespace-nowrap text-foreground">
+              Technology Management
+            </span>{" "}
+            at{" "}
+            <span className="whitespace-nowrap text-foreground">
+              Rutgers University
+            </span>
+            .
+          </p>
+          <p>
+            I design and build products that look clean and{" "}
             <span className="text-foreground">feel special</span>.
           </p>
         </div>
 
         <SocialLinks />
-
-        {/* Measures text with the DOM, so it can't be prerendered */}
-        {isClient && (
-          <ErrorBoundary>
-            <GitHubCalendar
-              username={site.githubUsername}
-              blockSize={9}
-              blockMargin={4}
-              fontSize={16}
-              colorScheme="dark"
-              theme={{ dark: CALENDAR_COLORS }}
-              throwOnError
-            />
-          </ErrorBoundary>
-        )}
       </div>
 
       {/* Sits beneath the wave band at the foot of the first viewport */}
@@ -131,14 +101,11 @@ function Hero() {
 
 function Contact() {
   return (
-    <section aria-label="Contact" className="pb-24 pt-12">
-      <p className="mb-6 max-w-md font-basier text-lg text-muted-foreground">
+    <section aria-label="Contact" className="pb-24">
+      <p className="mb-4 max-w-[80ch] text-balance text-muted-foreground">
         I’m always interested in hearing about new projects and opportunities.
       </p>
-      <a
-        href={`mailto:${site.email}`}
-        className={`text-2xl text-foreground md:text-3xl ${LINK}`}
-      >
+      <a href={`mailto:${site.email}`} className="hit-area link">
         {site.email}
       </a>
     </section>
